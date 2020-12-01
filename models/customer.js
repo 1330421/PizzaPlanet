@@ -1,3 +1,19 @@
 import mongoose from 'mongoose';
 
-const CustomerSchema
+const customerSchema = mongoose.Schema({
+
+    name: { type:String, required:true },
+    email: { type:String, required:true, unique:true},
+    planet: { type:String, ref:'PLANETS_NAMES', required:true},
+    coord: {
+        lat: { type:Number, required:true, min:-1000, max:1000 },
+        lon: { type:Number, required:true, min:-1000, max:1000 }
+    },
+    phone: { type:Number, required:true },
+    birthday: { type:Date, required:true },
+    referalCode: String
+}, {
+    collection:'customers'
+});
+
+export default mongoose.model('Customer', customerSchema)

@@ -1,0 +1,30 @@
+{
+  "name": "pizzaplanet",
+  "version": "1.0.0",
+  "description": "Projet qui gère les commandes de pizzerias",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1330421/PizzaPlanet.git"
+  },
+  "author": "Kevin St-Pierre, Louis-Philippe Brunet, Jordan Côté",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1330421/PizzaPlanet/issues"
+  },
+  "homepage": "https://github.com/1330421/PizzaPlanet#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "dayjs": "^1.9.6",
+    "express": "^4.17.1",
+    "express-paginate": "^1.0.2",
+    "express-validator": "^6.7.0",
+    "http-errors": "^1.8.0",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.11.1",
+    "nodemon": "^2.0.6"
+  }
+}

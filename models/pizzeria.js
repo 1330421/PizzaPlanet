@@ -23,7 +23,8 @@ const pizzeraiSchema = mongoose.Schema({
       required: true,
     },
   },
-  collection:'pizzeria',
+},{
+  collection:'pizzerias'
 });
 
 export default mongoose.model("Pizzeria", pizzeraiSchema);

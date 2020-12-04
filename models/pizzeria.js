@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import { MONSTER_ANCESTORS, PIZZA_TOPPINGS, PLANET_NAMES } from "../helpers/constants";
 
 const pizzeraiSchema = mongoose.Schema({
   pizzeria: {
     type: mongoose.Schema.Types.String,
-    ref: "PLANETS_NAME",
+    // ref: "PLANETS_NAME",
+    enum: PLANET_NAMES,
     required: true,
   },
   coord: {
@@ -14,12 +16,14 @@ const pizzeraiSchema = mongoose.Schema({
     name: { type: String, required: true },
     ancestor: {
       type: mongoose.Schema.Types.String,
-      ref: "MONSTER_ANCESTORS",
+      // ref: "MONSTER_ANCESTORS",
+      enum: MONSTER_ANCESTORS,
       required: true,
     },
     speciality: {
       type: mongoose.Schema.Types.String,
-      ref: "PIZZA_TOPPINGS",
+      // ref: "PIZZA_TOPPINGS",
+      enum: PIZZA_TOPPINGS,
       required: true,
     },
   },

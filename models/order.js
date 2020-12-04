@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { PIZZA_SIZES, PIZZA_TOPPINGS } from '../helpers/constants';
 
 const orderSchema = mongoose.Schema({
     customer: {
@@ -13,9 +14,9 @@ const orderSchema = mongoose.Schema({
     },
     orderDate: { type: Date, required: true },
     pizzas: [{
-        size: { type: String, ref: 'PIZZA_SIZES', required: true },
+        size: { type: String, enum: PIZZA_SIZES, required: true },
         price: { type: Number, required: true },
-        topping: [{ type: String, ref: 'PIZZA_TOPPINGS' }],
+        topping: [{ type: String, enum: PIZZA_TOPPINGS }],
     }]
 }, {
     collection: 'orders'

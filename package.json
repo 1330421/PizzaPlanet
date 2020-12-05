@@ -2,7 +2,8 @@
   "name": "pizzaplanet",
   "version": "1.0.0",
   "description": "Projet qui gère les commandes de pizzerias",
-  "main": "index.js",
+  "main": "server.js",
+  "type":"module",
   "scripts": {
     "start": "nodemon ./server.js --inspect",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +21,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "dayjs": "^1.9.6",
+    "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
     "express-paginate": "^1.0.2",
     "express-validator": "^6.7.0",

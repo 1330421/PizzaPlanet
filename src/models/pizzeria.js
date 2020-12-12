@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { COORD, MONSTER_ANCESTORS, PIZZA_TOPPINGS, PLANET_NAMES } from "../helpers/constants.js";
+import { COORD, MONSTER_ANCESTORS, PIZZA_TOPPINGS, PLANET_NAMES } from "../utils/constants.js";
 
 const pizzeriaSchema = mongoose.Schema({
   planet: {

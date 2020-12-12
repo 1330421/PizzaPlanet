@@ -1,21 +1,27 @@
 import mongoose from 'mongoose';
-import { PLANET_NAMES } from '../helpers/constants';
+import { COORD, PLANET_NAMES } from '../utils/constants.js';
 
 const customerSchema = mongoose.Schema({
 
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    // planet: { type:String, ref:'PLANETS_NAMES', required:true},
     planet: { type: String, enum: PLANET_NAMES, required: true },
     coord: {
         lat: { type: Number, required: true, min: COORD.MIN, max: COORD.MAX },
         lon: { type: Number, required: true, min: COORD.MIN, max: COORD.MAX }
     },
-    phone: { type: Number, required: true },
+    phone: { type: String, required: true }, // TODO string ou number
     birthday: { type: Date, required: true },
     referalCode: String
 }, {
     collection: 'customers'
+});
+
+customerSchema.virtual('orders', { // TODO Erreur embed
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'customer',
+    justOne: false
 });
 
 export default mongoose.model('Customer', customerSchema)

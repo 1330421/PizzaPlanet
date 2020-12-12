@@ -1,5 +1,5 @@
 import expressValidator from 'express-validator';
-import { PLANET_NAMES, COORD, MONSTER_ANCESTORS, PIZZA_TOPPINGS } from '../helpers/constants.js';
+import { PLANET_NAMES, COORD, MONSTER_ANCESTORS, PIZZA_TOPPINGS } from '../utils/constants.js';
 
 const { body } = expressValidator;
 

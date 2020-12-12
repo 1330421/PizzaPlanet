@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { PIZZA_SIZES, PIZZA_TOPPINGS } from '../helpers/constants';
+import { PIZZA_SIZES, PIZZA_TOPPINGS } from '../utils/constants';
 
 const orderSchema = mongoose.Schema({
     customer: {

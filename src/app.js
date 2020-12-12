@@ -1,9 +1,9 @@
 import express from 'express';
 
-import database from './helpers/database.js';
-import errors from './helpers/error.js';
+import database from './utils/database.js';
+import errors from './utils/error.js';
 
-//import customersServices from './routes/customersRoutes.js';
+import customersRoutes from './routes/customersRoutes.js';
 //import ordersRoutes from './routes/ordersRoutes.js';
 import pizzeriasRoutes from './routes/pizzeriasRoutes.js';
 
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use('/pizzerias', pizzeriasRoutes);
 //app.use('/orders',ordersRoutes);
-//app.use('/customers',customersServices);
+app.use('/customers', customersRoutes);
 
 //Route global pour la gestion des erreurs
 app.use('*', errors);

@@ -1,11 +1,15 @@
+// Fichier : pizzeriasRoutes.js
+// Auteurs : Kevin St-Pierre - KS
+// Date : 2020-12-05
+// But : Fichier des routes pour la gestion des pizzerias dans la base de données
+
 import express from 'express';
-import error from 'http-errors';
+import httpError from 'http-errors';
 import _ from 'lodash';
 
 import pizzeriasService from '../services/pizzeriasService.js';
-import pizzeriaRoutesValidators from '../validators/pizzeriasRoutesValidators.js';
 
-import validator from '../helpers/validator.js';
+import validator from '../utils/validator.js';
 import pizzeriasRoutesValidators from '../validators/pizzeriasRoutesValidators.js';
 
 const router = express.Router();
@@ -16,21 +20,24 @@ class PizzeriasRoutes {
         router.post('/', this.post); // TODO utiliser le ficher de validation
     }
 
+    //--------------------
+    // KS - P3 - Tente d'ajouter une pizzeria
+    //--------------------
     async post(req, res, next) {
 
         try {
             const newPizzeria = req.body;
 
             let pizzeria = await pizzeriasService.create(newPizzeria);
-            pizzeria = pizzeria.toObject({ getters: false, virtuals: false })
+            pizzeria = pizzeria.toObject({ getters: false, virtuals: false });
             pizzeria = pizzeriasService.transform(pizzeria);
 
-            res.header('Location', pizzeria.href)
+            res.header('Location', pizzeria.href);
             if (req.query._body === 'false') res.status(204).end();
             else res.status(201).json(pizzeria);
 
-        } catch (err) {
-            return next(err);
+        } catch (error) {
+            return next(error);
         }
     }
 }

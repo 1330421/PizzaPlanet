@@ -24,7 +24,6 @@ class PizzeriasRoutes {
     // KS - P3 - Tente d'ajouter une pizzeria
     //--------------------
     async post(req, res, next) {
-
         try {
             const newPizzeria = req.body;
 
@@ -33,11 +32,11 @@ class PizzeriasRoutes {
             pizzeria = pizzeriasService.transform(pizzeria);
 
             res.header('Location', pizzeria.href);
-            if (req.query._body === 'false') res.status(204).end();
-            else res.status(201).json(pizzeria);
-
+            if (req.query._body === 'false') res.status(204).end(); // 204
+            else res.status(201).json(pizzeria); // 201
+            
         } catch (error) {
-            return next(error);
+            return next(error); // 422 // 500
         }
     }
 }

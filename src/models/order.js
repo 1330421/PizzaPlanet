@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { PIZZA_SIZES, PIZZA_TOPPINGS } from '../utils/constants';
+import { PIZZA_SIZES, PIZZA_TOPPINGS } from '../utils/constants.js';
 
 const orderSchema = mongoose.Schema({
     customer: {
@@ -19,7 +19,7 @@ const orderSchema = mongoose.Schema({
         topping: [{ type: String, enum: PIZZA_TOPPINGS }],
     }]
 }, {
-    collection: 'orders'
+    collection: 'orders',
 });
 
 export default mongoose.model('Order', orderSchema);

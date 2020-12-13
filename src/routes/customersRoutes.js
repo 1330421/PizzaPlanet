@@ -20,20 +20,20 @@ class CustomersRoutes {
     // KS - C4 - Tente d'obtenir un client
     //--------------------
     async getOne(req, res, next) {
-
         const options = { isOrdersEmbed: false };
         if (req.query.embed === 'orders') options.isOrdersEmbed = true;
 
         const idCustomer = req.params.idCustomer;
         try {
             let customer = await customersService.retrieveById(idCustomer, options);
-            if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`));
+            if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)); // 404 // TODO Pas mon message qui affiche
 
             customer = customer.toObject({ virtuals: true });
-            customer = customersService.transform(customer);
-            res.status(200).json(customer);
+            customer = customersService.transform(customer, options);
+            res.status(200).json(customer); // 200
+            
         } catch (error) {
-            return next(error);
+            return next(error); // 500
         }
     }
 }

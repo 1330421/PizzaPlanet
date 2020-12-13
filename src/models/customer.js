@@ -14,10 +14,10 @@ const customerSchema = mongoose.Schema({
     birthday: { type: Date, required: true },
     referalCode: String
 }, {
-    collection: 'customers'
+    collection: 'customers',
 });
 
-customerSchema.virtual('orders', { // TODO Erreur embed
+customerSchema.virtual('orders', {
     ref: 'Order',
     localField: '_id',
     foreignField: 'customer',

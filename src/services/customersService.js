@@ -6,8 +6,7 @@
 import dayjs from 'dayjs';
 
 import Customer from '../models/customer.js';
-
-const ROUTE = 'customers';
+import ordersService from './ordersService.js';
 
 class CustomersServices {
 
@@ -23,11 +22,13 @@ class CustomersServices {
     //--------------------
     // KS - Transforme les données du client pour le corps de la réponse
     //--------------------
-    transform(customer) {
-        customer.href = `${process.env.BASE_URL}/${ROUTE}/${customer._id}`;
+    transform(customer, options) {
+        customer.href = `${process.env.BASE_URL}/customers/${customer._id}`;
         customer.phone = `[${customer.phone.substring(0, 4)}]${customer.phone.substring(4, 8)}-${customer.phone.substring(8, 14)}@${customer.phone.substring(14, 16)}`;
         customer.age = this.calculateAge(customer.birthday);
         customer.lightspeed = `[${customer.planet}]@(${customer.coord.lat};${customer.coord.lon})`;
+
+        customer.orders = customer.orders.map(o => ordersService.transform(o, { isCustomerEmbed: false }));
 
         delete customer._id;
         delete customer.__v;

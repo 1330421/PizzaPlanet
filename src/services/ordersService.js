@@ -10,6 +10,12 @@ const FRACTION_DIGITS = 3;
 
 class OrdersService {
 
+    retrieveByCriteria(criteria, options) {
+        const retrieveOrder = Order.find(criteria);
+
+        return retrieveOrder;
+    }
+
     //--------------------
     // KS - Transforme les données de la commande pour le corps de la réponse
     //--------------------

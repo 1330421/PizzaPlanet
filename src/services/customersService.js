@@ -11,6 +11,13 @@ import ordersService from './ordersService.js';
 class CustomersServices {
 
     //--------------------
+    // JC - Créer une nouvelle instance de customer dans la BD
+    //--------------------
+    create(customer) {
+        return Customer.create(customer);
+    }
+
+    //--------------------
     // KS - Retrouve un client à partir de son id
     //--------------------
     retrieveById(idCustomer, options) {

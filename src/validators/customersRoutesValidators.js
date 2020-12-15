@@ -12,6 +12,12 @@ class CustomersRoutesValidators {
             .isHexadecimal().bail(),
         ];
     }
+    postValidator() {
+        return [
+            body('email').exists().bail().isEmail().bail(),
+        ]
+    }
+
 }
 
 export default new CustomersRoutesValidators();

@@ -10,16 +10,17 @@ const orderSchema = mongoose.Schema({
     pizzeria: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pizzeria',
-        required: true
+        required: true,
     },
     orderDate: { type: Date, required: true },
     pizzas: [{
         size: { type: String, enum: PIZZA_SIZES, required: true },
         price: { type: Number, required: true },
-        topping: [{ type: String, enum: PIZZA_TOPPINGS }],
+        toppings: [{ type: String, enum: PIZZA_TOPPINGS }],
     }]
 }, {
     collection: 'orders',
+    id: false
 });
 
 export default mongoose.model('Order', orderSchema);

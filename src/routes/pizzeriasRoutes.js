@@ -17,7 +17,7 @@ const router = express.Router();
 class PizzeriasRoutes {
 
     constructor() {
-        router.post('/', this.post); // TODO utiliser le ficher de validation
+        router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
     }
 
     //--------------------

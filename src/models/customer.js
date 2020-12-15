@@ -10,11 +10,12 @@ const customerSchema = mongoose.Schema({
         lat: { type: Number, required: true, min: COORD.MIN, max: COORD.MAX },
         lon: { type: Number, required: true, min: COORD.MIN, max: COORD.MAX }
     },
-    phone: { type: String, required: true }, // TODO string ou number
+    phone: { type: String, required: true },
     birthday: { type: Date, required: true },
     referalCode: String
 }, {
     collection: 'customers',
+    id: false
 });
 
 customerSchema.virtual('orders', {

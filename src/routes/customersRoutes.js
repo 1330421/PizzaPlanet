@@ -26,7 +26,7 @@ class CustomersRoutes {
         const idCustomer = req.params.idCustomer;
         try {
             let customer = await customersService.retrieveById(idCustomer, options);
-            if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)); // 404 // TODO Pas mon message qui affiche
+            if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)); // 404
 
             customer = customer.toObject({ virtuals: true });
             customer = customersService.transform(customer, options);

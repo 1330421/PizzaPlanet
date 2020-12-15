@@ -4,7 +4,7 @@ import database from './utils/database.js';
 import errors from './utils/error.js';
 
 import customersRoutes from './routes/customersRoutes.js';
-//import ordersRoutes from './routes/ordersRoutes.js';
+import ordersRoutes from './routes/ordersRoutes.js';
 import pizzeriasRoutes from './routes/pizzeriasRoutes.js';
 
 const app = express();
@@ -14,7 +14,7 @@ database(app);
 app.use(express.json());
 
 app.use('/pizzerias', pizzeriasRoutes);
-//app.use('/orders',ordersRoutes);
+app.use('/orders',ordersRoutes);
 app.use('/customers', customersRoutes);
 
 //Route global pour la gestion des erreurs

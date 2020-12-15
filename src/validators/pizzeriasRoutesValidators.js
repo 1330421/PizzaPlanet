@@ -7,9 +7,9 @@ class PizzeriaRoutesValidators {
 
     postValidator() {
         return [
-            this.validatePlanet(),
-            this.validateCoord(),
-            this.validateChef()
+            ... this.validatePlanet(),
+            ... this.validateCoord(),
+            ... this.validateChef()
         ];
     }
 
@@ -17,9 +17,11 @@ class PizzeriaRoutesValidators {
     // Valide le nom de la planet
     //--------------------
     validatePlanet() {
-        body('planet')
-            .exists().withMessage(`Le nom de la planet doit être metionné.`).bail()
-            .isIn(PLANET_NAMES).withMessage('La planète mentionnée n\'est pas répertorié');
+        return [
+            body('planet')
+                .exists().withMessage(`Le nom de la planet doit être metionné.`).bail()
+                .isIn(PLANET_NAMES).withMessage('La planète mentionnée n\'est pas répertorié')
+        ];
     }
 
     //--------------------
@@ -28,7 +30,7 @@ class PizzeriaRoutesValidators {
     validateCoord() {
         return [
             body('coord.lat')
-                .exists().withMessage('La latitude doit être mentionnéea').bail()
+                .exists().withMessage('La latitude doit être mentionnée').bail()
                 .isFloat({ min: COORD.MIN, max: COORD.MAX }).withMessage(`La latitiude doit être entre ${COORD.MIN} et ${COORD.MAX}`),
             body('coord.lon')
                 .exists().withMessage('La longitude doit être mentionnée').bail()

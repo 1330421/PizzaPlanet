@@ -28,7 +28,7 @@ class CustomersServices {
         customer.age = this.calculateAge(customer.birthday);
         customer.lightspeed = `[${customer.planet}]@(${customer.coord.lat};${customer.coord.lon})`;
 
-        customer.orders = customer.orders.map(o => ordersService.transform(o, { isCustomerEmbed: false }));
+        if (options.isOrdersEmbed) customer.orders = customer.orders.map(o => ordersService.transform(o, { isCustomerEmbed: false }));
 
         delete customer._id;
         delete customer.__v;

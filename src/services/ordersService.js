@@ -5,22 +5,45 @@
 
 import Order from '../models/order.js';
 
-const TAXE = 0.87;
+const TAXE = 0.0087;
 const FRACTION_DIGITS = 3;
 
 class OrdersService {
 
     //--------------------
+    // KS - Retrouve toutes les commandes avec les options définies
+    //--------------------
+    retrieveAll(options) {
+        let retrieveQuery = Order.find();
+        let countQuery = Order.countDocuments();
+
+        if (options.topping) {
+            const criteria = { 'pizzas.toppings': options.topping };
+            retrieveQuery = Order.find(criteria);
+            countQuery = Order.countDocuments(criteria);
+        }
+
+        retrieveQuery
+            .limit(options.limit)
+            .skip(options.skip)
+            .sort('-orderDate');
+
+        return Promise.all([retrieveQuery, countQuery]);
+    }
+
+    //--------------------
     // KS - Transforme les données de la commande pour le corps de la réponse
     //--------------------
-    transform(order, options) {
+    transform(order, options = {}) {
+        order.href = `${process.env.BASE_URL}/orders/${order.customer}`;
         order.customer = { href: `${process.env.BASE_URL}/customers/${order.customer}` };
         order.pizzeria = { href: `${process.env.BASE_URL}/pizzerias/${order.pizzeria}` };
         order.subTotal = parseFloat(this.calculateSubTotal(order.pizzas).toFixed(FRACTION_DIGITS), 10);
-        order.taxeRates = TAXE / 100; // TODO Constante
+        order.taxeRates = TAXE;
         order.taxes = parseFloat((order.subTotal * order.taxeRates).toFixed(FRACTION_DIGITS), 10);
         order.total = order.subTotal + order.taxes;
 
+        order.pizzas.forEach(p => delete p.id);
         delete order._id;
         delete order.__v;
         return order;

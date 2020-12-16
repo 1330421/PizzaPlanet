@@ -15,6 +15,23 @@ class pizzeriasService {
     }
 
     //--------------------
+    // JC - Aller chercher toutes les pizzerias
+    //--------------------
+    getAll(options) {
+        let retrieveQuery;
+        let docCount;
+        
+        if (options.speciality) {
+            retrieveQuery = Pizzeria.find({'chef.speciality':options.speciality});
+            docCount = countDocuments({'chef.speciality':options.speciality});
+        } else {
+            retrieveQuery = Pizzeria.find();
+            docCount = countDocuments();
+        }
+        return Promise.all({retrieveQuery, docCount})
+    }
+
+    //--------------------
     // KS - Transforme les données de la pizzeria pour le corps de la réponse
     //--------------------
     transform(pizzeria) {

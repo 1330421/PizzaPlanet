@@ -5,6 +5,7 @@
 
 import express from 'express';
 import httpError from 'http-errors';
+import paginate from 'express-paginate';
 import _ from 'lodash';
 
 import pizzeriasService from '../services/pizzeriasService.js';
@@ -17,7 +18,41 @@ const router = express.Router();
 class PizzeriasRoutes {
 
     constructor() {
+        router.get('/', paginate.middleware(25, 50), paginate, this.getAll)
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
+    }
+
+    async getAll() {
+        const options = {
+            limit: req.query.limit,
+            page: req.query.page,
+            skip: req.skip
+        };
+
+        if (condition) {
+            options.speciality = req.query.speciality;
+        }
+
+        try {
+            let {pizzerias, documentCount} = pizzeriasService.getAll(options);
+
+            let transformPizzerias = pizzerias.map(p => {
+                p = p.toObject();
+                p = pizzeriasService.transform(p)
+            });
+
+            let response = {
+                _links: {
+                    prev:,
+                    self:,
+                    next:
+                }
+            };
+
+            res.status(200).json(response);
+        } catch (err) {
+            return next(err);
+        }
     }
 
     //--------------------

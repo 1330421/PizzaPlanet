@@ -1,11 +1,13 @@
 // Fichier : ordersRoutes.js
-// Auteurs : Kevin St-Pierre - KS
+// Auteurs : Jordan Côté - JC
+// Kevin St-Pierre - KS
 // Date : 2020-12-13
 // But : Fichier des routes pour la gestion des commandes dans la base de données
 
 import express from 'express';
-import paginate, { hasNextPages } from 'express-paginate';
+import paginate from 'express-paginate';
 import httpError from 'http-errors';
+import _ from 'lodash';
 
 import ordersService from '../services/ordersService.js';
 
@@ -15,6 +17,7 @@ class OrdersRoutes {
 
     constructor() {
         router.get('/', paginate.middleware(10, 30), this.getAll);
+        router.get('/pizzerias/:idPizzeria/orders/:idOrder', this.getOne);
     }
 
     //--------------------
@@ -27,6 +30,7 @@ class OrdersRoutes {
             skip: req.skip
         };
         if (req.query.topping) options.topping = req.query.topping;
+
         try {
             const [orders, documentsCount] = await ordersService.retrieveAll(options);
 
@@ -67,6 +71,41 @@ class OrdersRoutes {
             return next(console.error()); // 500
         }
     }
+
+    //------------------------------------------
+    // O2 - Aller chercher une commande spécifique d'une pizzeria
+    //------------------------------------------
+    async getOne(req, res, next) {
+        const options = {
+            isCustomerEmbed: false
+        }
+
+        const criteria = {
+            pizzeria: req.params.idPizzeria,
+            _id: req.params.idOrder
+        }
+
+        if (req.query.embed === 'customer') {
+            options.isCustomerEmbed = true;
+        }
+
+        try {
+            let order = await ordersService.retrieveByCriteria(criteria, options)
+            if (!order) {
+                return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder}`));
+            }
+
+            // Transformation de la réponse
+            order = order.toObject({virtuals: true});
+            order = ordersService.transform(order, options);
+
+            // Envoyer la réponse
+            res.status(200).json(order);
+        } catch (err) {
+            return next(err);
+        }
+    }
 }
+
 new OrdersRoutes()
 export default router;

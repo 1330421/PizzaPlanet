@@ -106,6 +106,10 @@ class PizzeriasRoutes {
         }
     }
 
+
+    //-----------------------------
+    // O2
+    //-----------------------------
     async getOneOrder(req, res, next) {
         const options = { isCustomerEmbed: false };
         if (req.query.embed === 'customer') options.isCustomerEmbed = true;

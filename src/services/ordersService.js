@@ -12,7 +12,6 @@ class OrdersService {
 
     retrieveByCriteria(criteria, options) {
         const retrieveOrder = Order.find(criteria);
-
         return retrieveOrder;
     }
 

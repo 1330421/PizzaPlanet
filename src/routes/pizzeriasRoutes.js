@@ -21,6 +21,7 @@ class PizzeriasRoutes {
     constructor() {
         router.get('/', paginate.middleware(25, 50), this.getAll)
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
+        router.get('/:idPizzeria/orders/:idOrder', this.getOneOrder);
     }
 
     //-----------------------------
@@ -102,6 +103,23 @@ class PizzeriasRoutes {
 
         } catch (error) {
             return next(error); // 422 // 500
+        }
+    }
+
+    async getOneOrder(req, res, next) {
+        const options = { isCustomerEmbed: false };
+        if (req.query.embed === 'customer') options.isCustomerEmbed = true;
+
+        const idPizzeria = req.params.idPizzeria;
+        const idOrder = req.params.idOrder;
+
+        try {
+            const order = await pizzeriasService.retrieveOrderById(idOrder, idPizzeria, options);
+
+            console.log(order);
+
+        } catch (error) {
+            return next(error);
         }
     }
 }

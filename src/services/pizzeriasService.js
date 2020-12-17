@@ -17,18 +17,23 @@ class pizzeriasService {
     //--------------------
     // JC - Aller chercher toutes les pizzerias
     //--------------------
-    getAll(options) {
+    retrieveAll(options) {
         let retrieveQuery;
-        let docCount;
+        let countQuery;
+        const criteria = {
+            'chef.speciality':options.speciality
+        }
         
         if (options.speciality) {
-            retrieveQuery = Pizzeria.find({'chef.speciality':options.speciality});
-            docCount = countDocuments({'chef.speciality':options.speciality});
+            retrieveQuery = Pizzeria.find(criteria);
+            countQuery = Pizzeria.countDocuments(criteria);
         } else {
             retrieveQuery = Pizzeria.find();
-            docCount = countDocuments();
+            countQuery = Pizzeria.countDocuments();
         }
-        return Promise.all({retrieveQuery, docCount})
+        retrieveQuery.limit(options.limit).skip(options.skip).sort('chef.name');
+
+        return Promise.all([retrieveQuery, countQuery])
     }
 
     //--------------------

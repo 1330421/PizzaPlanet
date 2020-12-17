@@ -55,14 +55,14 @@ class PizzeriasRoutes {
                 p = pizzeriasService.transform(p);
                 return p;
             });
-
-            console.log(req.query.page);
+            console.log(documentsCount);
+            console.log(pageArray);
 
             const responseBody = {
                 _links: {
                     prev: `${process.env.BASE_URL}${pageArray[0].url}`,
                     self: `${process.env.BASE_URL}${pageArray[1].url}`,
-                    next: `${process.env.BASE_URL}${pageArray[2].url}` // Cannot read property 'url' of undefined
+                    next: `${process.env.BASE_URL}${pageArray[2].url}` // TODO: Cannot read property 'url' of undefined
                 },
                 data: transformPizzerias
             };
@@ -72,7 +72,7 @@ class PizzeriasRoutes {
                 responseBody._links.self = responseBody._links.prev;
                 delete responseBody._links.prev;
             }
-
+            
             if (!hasNextPage) { // Si on est à la dernière page
                 responseBody._links.prev = responseBody._links.self;
                 responseBody._links.self = responseBody._links.next;

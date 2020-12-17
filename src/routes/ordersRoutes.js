@@ -73,7 +73,7 @@ class OrdersRoutes {
     }
 
     //------------------------------------------
-    // O2 - Aller chercher une commande spécifique d'une pizzeria
+    // JC - O2 - Aller chercher une commande spécifique d'une pizzeria
     //------------------------------------------
     async getOne(req, res, next) {
         const options = {
@@ -94,13 +94,13 @@ class OrdersRoutes {
             if (!order) {
                 return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder}`));
             }
-
+            
             // Transformation de la réponse
-            order = order.toObject({virtuals: true});
-            order = ordersService.transform(order, options);
+            order[0] = order[0].toObject({getters:false, virtuals: true});
+            order[0] = ordersService.transform(order[0], options);
 
             // Envoyer la réponse
-            res.status(200).json(order);
+            res.status(200).json(order[0]);
         } catch (err) {
             return next(err);
         }

@@ -21,6 +21,28 @@ class pizzeriasService {
     }
 
     //--------------------
+    // JC - Aller chercher toutes les pizzerias
+    //--------------------
+    retrieveAll(options) {
+        let retrieveQuery;
+        let countQuery;
+        const criteria = {
+            'chef.speciality':options.speciality
+        }
+        
+        if (options.speciality) {
+            retrieveQuery = Pizzeria.find(criteria);
+            countQuery = Pizzeria.countDocuments(criteria);
+        } else {
+            retrieveQuery = Pizzeria.find();
+            countQuery = Pizzeria.countDocuments();
+        }
+        retrieveQuery.limit(options.limit).skip(options.skip).sort('chef.name');
+
+        return Promise.all([retrieveQuery, countQuery])
+    }
+
+    //--------------------
     // KS - Transforme les données de la pizzeria pour le corps de la réponse
     //--------------------
     transform(pizzeria) {

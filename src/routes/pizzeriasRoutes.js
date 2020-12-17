@@ -18,6 +18,7 @@ class PizzeriasRoutes {
 
     constructor() {
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
+        router.get('/:idPizzeria/orders/:idOrder', this.getOneOrder);
     }
 
     //--------------------
@@ -34,9 +35,26 @@ class PizzeriasRoutes {
             res.header('Location', pizzeria.href);
             if (req.query._body === 'false') res.status(204).end(); // 204
             else res.status(201).json(pizzeria); // 201
-            
+
         } catch (error) {
             return next(error); // 422 // 500
+        }
+    }
+
+    async getOneOrder(req, res, next) {
+        const options = { isCustomerEmbed: false };
+        if (req.query.embed === 'customer') options.isCustomerEmbed = true;
+
+        const idPizzeria = req.params.idPizzeria;
+        const idOrder = req.params.idOrder;
+
+        try {
+            const order = await pizzeriasService.retrieveOrderById(idOrder, idPizzeria, options);
+
+            console.log(order);
+
+        } catch (error) {
+            return next(error);
         }
     }
 }

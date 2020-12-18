@@ -14,7 +14,7 @@ database(app);
 app.use(express.json());
 
 app.use('/pizzerias', pizzeriasRoutes);
-app.use('/orders',ordersRoutes);
+app.use('/',ordersRoutes);
 app.use('/customers', customersRoutes);
 
 //Route global pour la gestion des erreurs

@@ -56,7 +56,7 @@ class CustomersRoutes {
             let customer = await customersService.create(nvCsr);
 
             customer = customer.toObject({ virtuals: false });
-            customer = customersService.transform(customer);
+            customer = customersService.transform(customer, {});
 
             res.header('Location', customer.planet);
             if (req.query._body === 'false') {

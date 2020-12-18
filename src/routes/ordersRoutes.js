@@ -16,7 +16,7 @@ const router = express.Router();
 class OrdersRoutes {
 
     constructor() {
-        router.get('/', paginate.middleware(10, 30), this.getAll);
+        router.get('/orders', paginate.middleware(10, 30), this.getAll);
         router.get('/pizzerias/:idPizzeria/orders/:idOrder', this.getOne);
     }
 

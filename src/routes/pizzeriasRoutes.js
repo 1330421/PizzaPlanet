@@ -21,6 +21,7 @@ class PizzeriasRoutes {
     constructor() {
         router.get('/', paginate.middleware(25, 50), this.getAll)
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
+        router.get('/:idPizzeria',this.getOne);
         router.get('/:idPizzeria/orders/:idOrder', this.getOneOrder);
     }
 
@@ -128,7 +129,35 @@ class PizzeriasRoutes {
             return next(error); // 422 // 500
         }
     }
+    //-----------------------------
+    // LB - P2 - Tenter d'aller chercher une pizzeria spécifié
+    //-----------------------------
+    async getOne(req,res,next){
 
+        const options = {
+            isOrdersEmbed:false
+        };
+
+        const idPizzeria=req.params.idPizzeria;
+
+        if (req.query.embed==='orders') {
+            options.isOrdersEmbed=true;
+        }
+        try {
+
+            let pizzeria =await pizzeriasService.retrieveById(idPizzeria,options);
+
+            if(!pizzeria){
+                return next(httpError.NotFound(`La pizzeria avec l'identifiant ${idPizzeria} n'existe pas.`))
+            }
+        
+            pizzeria=pizzeria.toObject({virtuals:true});
+            pizzeria=pizzeriasService.transform(pizzeria,options);
+            res.status(200).json(pizzeria);
+        }catch(err){
+
+        }
+    }
 
     //-----------------------------
     // O2
@@ -149,6 +178,8 @@ class PizzeriasRoutes {
             return next(error);
         }
     }
+
+
 }
 
 new PizzeriasRoutes();

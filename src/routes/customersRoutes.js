@@ -18,6 +18,7 @@ class CustomersRoutes {
 
     constructor() {
         router.get('/:idCustomer', this.getOne);
+        router.put('/:idCustomer',this.put);
         router.post('/', CustomersRoutesValidators.postValidator(), validator, this.post);
     }
 
@@ -67,6 +68,28 @@ class CustomersRoutes {
         } catch (err) {
             return next(err);
         }
+    }
+
+    //--------------------
+    // LB - C2 - Tenter de modifier un customers
+    //--------------------
+    async put(req,res,next){    
+
+        if (_.isEmpty(req.body)) {
+            return res.status(204).end();
+        }
+        
+
+        try {
+
+
+            
+
+            res.status(200).json();
+        } catch (error) {
+            return next(error);
+        }
+
     }
 
 }

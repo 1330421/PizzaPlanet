@@ -29,7 +29,7 @@ class CustomersServices {
     //--------------------
     // KS - Transforme les données du client pour le corps de la réponse
     //--------------------
-    transform(customer, options) {
+    transform(customer, options={}) {
         customer.href = `${process.env.BASE_URL}/customers/${customer._id}`;
         customer.phone = `[${customer.phone.substring(0, 4)}]${customer.phone.substring(4, 8)}-${customer.phone.substring(8, 14)}@${customer.phone.substring(14, 16)}`;
         customer.age = this.calculateAge(customer.birthday);
@@ -48,6 +48,18 @@ class CustomersServices {
     calculateAge(birthday) {
         const today = dayjs(Date.now());
         return today.diff(birthday, 'year');
+    }
+
+    emailValidation(customer){
+        if( Customer.findOne(customer.email)){
+            return false;
+        }
+        return true;
+    }
+
+    update(idCustomer,customerMod){
+        const filter={_id:idCustomer};
+        return Customer.findOneAndUpdate(filter,customerMod,{new:true});
     }
 }
 

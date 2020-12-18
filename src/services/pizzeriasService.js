@@ -5,9 +5,8 @@
 
 import Pizzeria from '../models/pizzeria.js';
 import ordersService from './ordersService.js';
-import ordersService from './ordersService.js';
 
-import Pizzeria from '../models/pizzeria.js';
+
 
 class pizzeriasService {
 

@@ -21,7 +21,8 @@ class PizzeriasRoutes {
     constructor() {
         router.get('/', paginate.middleware(25, 50), this.getAll)
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
-        router.get('/:idPizzeria',this.getOne)
+        router.get('/:idPizzeria',this.getOne);
+        router.get('/:idPizzeria/orders/:idOrder', this.getOneOrder);
     }
 
     //-----------------------------
@@ -56,14 +57,14 @@ class PizzeriasRoutes {
                 p = pizzeriasService.transform(p);
                 return p;
             });
-
-            console.log(req.query.page);
+            console.log(documentsCount);
+            console.log(pageArray);
 
             const responseBody = {
                 _links: {
                     prev: `${process.env.BASE_URL}${pageArray[0].url}`,
                     self: `${process.env.BASE_URL}${pageArray[1].url}`,
-                    next: `${process.env.BASE_URL}${pageArray[2].url}` // Cannot read property 'url' of undefined
+                    next: `${process.env.BASE_URL}${pageArray[2].url}` // TODO: Cannot read property 'url' of undefined
                 },
                 data: transformPizzerias
             };
@@ -73,7 +74,7 @@ class PizzeriasRoutes {
                 responseBody._links.self = responseBody._links.prev;
                 delete responseBody._links.prev;
             }
-
+            
             if (!hasNextPage) { // Si on est à la dernière page
                 responseBody._links.prev = responseBody._links.self;
                 responseBody._links.self = responseBody._links.next;
@@ -130,6 +131,26 @@ class PizzeriasRoutes {
             pizzeria=pizzeria.toObject({virtuals:true});
             pizzeria=pizzeriasService.transform(pizzeria,options);
             res.status(200).json(pizzeria);
+        }catch(err){
+
+        }
+    }
+
+    //-----------------------------
+    // O2
+    //-----------------------------
+    async getOneOrder(req, res, next) {
+        const options = { isCustomerEmbed: false };
+        if (req.query.embed === 'customer') options.isCustomerEmbed = true;
+
+        const idPizzeria = req.params.idPizzeria;
+        const idOrder = req.params.idOrder;
+
+        try {
+            const order = await pizzeriasService.retrieveOrderById(idOrder, idPizzeria, options);
+
+            console.log(order);
+
         } catch (error) {
             return next(error);
         }

@@ -5,6 +5,10 @@
 
 import Pizzeria from '../models/pizzeria.js';
 import ordersService from './ordersService.js';
+import ordersService from './ordersService.js';
+
+import Pizzeria from '../models/pizzeria.js';
+
 class pizzeriasService {
 
     //--------------------
@@ -12,6 +16,10 @@ class pizzeriasService {
     //--------------------
     create(pizzeria) {
         return Pizzeria.create(pizzeria);
+    }
+
+    retrieveOrderById(idOrder, idPizzeria, options) {
+        return ordersService.retrieveByCriteria({ _id: idOrder, pizzeria: idPizzeria }, options);
     }
 
     //--------------------

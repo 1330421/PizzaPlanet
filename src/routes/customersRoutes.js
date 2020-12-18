@@ -8,6 +8,9 @@ import httpError from 'http-errors';
 import _ from 'lodash';
 
 import customersService from '../services/customersService.js';
+import CustomersRoutesValidators from '../validators/customersRoutesValidators.js';
+import error from '../utils/error.js';
+import validator from '../utils/validator.js';
 
 const router = express.Router();
 
@@ -16,6 +19,7 @@ class CustomersRoutes {
     constructor() {
         router.get('/:idCustomer', this.getOne);
         router.put('/:idCustomer',this.put);
+        router.post('/', CustomersRoutesValidators.postValidator(), validator, this.post);
     }
 
     //--------------------
@@ -61,7 +65,7 @@ class CustomersRoutes {
             } else {
                 res.status(201).json(customer); // Created
             }
-        } catch (error) {
+        } catch (err) {
             return next(err);
         }
     }

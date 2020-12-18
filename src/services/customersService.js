@@ -18,6 +18,27 @@ class CustomersServices {
     }
 
     //--------------------
+    // LB - Renvoie les client selon les paramètres URL
+    //--------------------
+    retrieveAll(options){
+        let retrieveQuery;
+        let countQuery;
+
+        const criteria = {
+            'planet':options.planet
+        }
+        if (options.planet) {
+            retrieveQuery = Customer.find(criteria);
+            countQuery = Customer.countDocuments(criteria);
+        }else{
+        retrieveQuery = Customer.find();
+        countQuery = Customer.countDocuments();
+        }
+        retrieveQuery.limit(options.limit).skip(options.skip).sort('birthday');
+        return Promise.all([retrieveQuery, countQuery])
+    }
+
+    //--------------------
     // KS - Retrouve un client à partir de son id
     //--------------------
     retrieveById(idCustomer, options) {
@@ -50,6 +71,11 @@ class CustomersServices {
         return today.diff(birthday, 'year');
     }
 
+
+
+    //--------------------
+    // LB - Vérifie si le courrie existe dans la base de donnée
+    //--------------------
     emailValidation(customer){
         if( Customer.findOne(customer.email)){
             return false;
@@ -57,6 +83,9 @@ class CustomersServices {
         return true;
     }
 
+    //--------------------
+    // LB - Retrouve le client dans la base de donnée et le met à jour
+    //--------------------
     update(idCustomer,customerMod){
         const filter={_id:idCustomer};
         return Customer.findOneAndUpdate(filter,customerMod,{new:true});

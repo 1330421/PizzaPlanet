@@ -6,7 +6,7 @@
 import express from "express";
 import httpError from "http-errors";
 import _ from "lodash";
-import paginate from 'express-paginate';
+import paginate from "express-paginate";
 import customersService from "../services/customersService.js";
 import customersRoutesValidators from "../validators/customersRoutesValidators.js";
 import error from "../utils/error.js";
@@ -29,7 +29,7 @@ class CustomersRoutes {
       validator,
       this.post
     );
-    router.get("/", paginate.middleware(25, 50), this.getAll);
+    router.get("/", paginate.middleware(20, 40), this.getAll);
   }
 
   //--------------------
@@ -42,6 +42,88 @@ class CustomersRoutes {
       page: req.query.page,
       skip: req.skip,
     };
+
+    if (req.query.planet) {
+      options.planet = req.query.planet;
+    }
+    try {
+      const [customers, documentsCount] = await customersService.retrieveAll(
+        options
+      );
+      const pageCount = Math.ceil(documentsCount / req.query.limit);
+      const functionPages = paginate.getArrayPages(req);
+      const pageArray = functionPages(3, pageCount, req.query.page);
+      const hasNextPage = paginate.hasNextPages(req)(pageCount);
+
+      if (req.query.page > pageCount) {
+        return next(httpError.BadRequest());
+      }
+
+      const transformCustomers = customers.map((c) => {
+        c = c.toObject({ virtuals: false });
+        c = customersService.transform(c);
+        return c;
+      });
+
+      const responseBody = {
+        _links: {
+          prev: !(pageArray[0] == undefined)
+            ? `${process.env.BASE_URL}${pageArray[0].url}`
+            : null,
+          self: !(pageArray[1] == undefined)
+            ? `${process.env.BASE_URL}${pageArray[1].url}`
+            : null,
+          next: !(pageArray[2] == undefined)
+            ? `${process.env.BASE_URL}${pageArray[2].url}`
+            : null,
+        },
+        data: transformCustomers,
+      };
+
+      switch (pageArray.length) {
+        case 1:
+          if (req.query.page === 1) {
+            // Si on a seulement une page.
+            responseBody._links.self = responseBody._links.prev;
+            delete responseBody._links.next;
+            delete responseBody._links.prev;
+          }
+          break;
+        case 2:
+          if (req.query.page === 1) {
+            // Si on est à la première page
+            responseBody._links.next = responseBody._links.self;
+            responseBody._links.self = responseBody._links.prev;
+            delete responseBody._links.prev;
+          }
+          if (!hasNextPage) {
+            // Si on est à la dernière page et qu'on a seulement deux pages
+            delete responseBody._links.next;
+          }
+          break;
+
+        default:
+          // Si on a plus que deux page
+          if (req.query.page === 1) {
+            // Si on est à la première page
+            responseBody._links.next = responseBody._links.self;
+            responseBody._links.self = responseBody._links.prev;
+            delete responseBody._links.prev;
+          }
+
+          if (!hasNextPage) {
+            // Si on est à la dernière page
+            responseBody._links.prev = responseBody._links.self;
+            responseBody._links.self = responseBody._links.next;
+            delete responseBody._links.next;
+          }
+          break;
+      }
+
+      res.status(200).json(responseBody);
+    } catch (error) {
+      return next(error);
+    }
   }
   //--------------------
   // KS - C4 - Tente d'obtenir un client
@@ -94,32 +176,7 @@ class CustomersRoutes {
   }
 
   //--------------------
-  // LB - C2 - Tenter de modifier un customers
-  //--------------------
-  async put(req, res, next) {
-    try {
-      if (_.isEmpty(req.body)) {
-        return res.status(204).end();
-      }
-
-      let customer = await customersService.create(nvCsr);
-
-      customer = customer.toObject({ virtuals: false });
-      customer = customersService.transform(customer);
-
-      res.header("Location", customer.planet);
-      if (req.query._body === "false") {
-        res.status(204).end(); // No content
-      } else {
-        res.status(201).json(customer); // Created
-      }
-    } catch (err) {
-      return next(err);
-    }
-  }
-
-  //--------------------
-  // LB - C2 - Tenter de modifier un customers
+  // LB - C2 - Tenter de modifier un customer
   //--------------------
   async put(req, res, next) {
     try {

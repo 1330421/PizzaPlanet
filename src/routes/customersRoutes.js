@@ -8,7 +8,6 @@ import httpError from 'http-errors';
 import _ from 'lodash';
 
 import customersService from '../services/customersService.js';
-import error from '../utils/error.js';
 
 const router = express.Router();
 
@@ -16,6 +15,7 @@ class CustomersRoutes {
 
     constructor() {
         router.get('/:idCustomer', this.getOne);
+        router.put('/:idCustomer',this.put);
     }
 
     //--------------------
@@ -64,6 +64,28 @@ class CustomersRoutes {
         } catch (error) {
             return next(err);
         }
+    }
+
+    //--------------------
+    // LB - C2 - Tenter de modifier un customers
+    //--------------------
+    async put(req,res,next){    
+
+        if (_.isEmpty(req.body)) {
+            return res.status(204).end();
+        }
+        
+
+        try {
+
+
+            
+
+            res.status(200).json();
+        } catch (error) {
+            return next(error);
+        }
+
     }
 
 }

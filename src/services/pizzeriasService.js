@@ -3,8 +3,8 @@
 // Date : 2020-12-05
 // But : Fichier de service pour la gestion des pizzerias dans la base de données
 
-import Pizzeria from '../models/pizzeria.js'
-
+import Pizzeria from '../models/pizzeria.js';
+import ordersService from './ordersService.js';
 class pizzeriasService {
 
     //--------------------
@@ -36,12 +36,31 @@ class pizzeriasService {
         return Promise.all([retrieveQuery, countQuery])
     }
 
+
+
+    retrieveById(idPizzeria,options){
+        const retrieveQuery = Pizzeria.findById(idPizzeria);
+
+        if (options.isOrdersEmbed) {
+            
+            retrieveQuery.populate('orders');
+        }
+
+        return retrieveQuery;
+    }
+
     //--------------------
     // KS - Transforme les données de la pizzeria pour le corps de la réponse
     //--------------------
-    transform(pizzeria) {
+    transform(pizzeria,options) {
         pizzeria.href = `${process.env.BASE_URL}/pizzerias/${pizzeria._id}`;
         pizzeria.lightspeed = `[${pizzeria.planet}]@(${pizzeria.coord.lat};${pizzeria.coord.lon})`;
+
+        if(options.isOrdersEmbed){
+            pizzeria.orders=pizzeria.orders.map(o=>{
+               return ordersService.transform(o);
+            });
+        }
 
         delete pizzeria._id;
         delete pizzeria.__v;

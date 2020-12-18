@@ -53,7 +53,7 @@ class PizzeriasRoutes {
             }
 
             const transformPizzerias = pizzerias.map(p => {
-                p = p.toObject({virtuals:false});
+                p = p.toObject({ virtuals: false });
                 p = pizzeriasService.transform(p);
                 return p;
             });
@@ -62,23 +62,46 @@ class PizzeriasRoutes {
 
             const responseBody = {
                 _links: {
-                    prev: `${process.env.BASE_URL}${pageArray[0].url}`,
-                    self: `${process.env.BASE_URL}${pageArray[1].url}`,
-                    next: `${process.env.BASE_URL}${pageArray[2].url}` // TODO: Cannot read property 'url' of undefined
+                    prev: !(pageArray[0] == undefined) ? `${process.env.BASE_URL}${pageArray[0].url}` : null,
+                    self: !(pageArray[1] == undefined) ? `${process.env.BASE_URL}${pageArray[1].url}` : null,
+                    next: !(pageArray[2] == undefined) ? `${process.env.BASE_URL}${pageArray[2].url}` : null 
                 },
                 data: transformPizzerias
             };
 
-            if (req.query.page === 1) { // Si on est à la première page
-                responseBody._links.next = responseBody._links.self;
-                responseBody._links.self = responseBody._links.prev;
-                delete responseBody._links.prev;
-            }
-            
-            if (!hasNextPage) { // Si on est à la dernière page
-                responseBody._links.prev = responseBody._links.self;
-                responseBody._links.self = responseBody._links.next;
-                delete responseBody._links.next;
+            switch (pageArray.length) {
+                case 1:
+                    if (req.query.page === 1) { // Si on a seulement une page.
+                        responseBody._links.self = responseBody._links.prev;
+                        delete responseBody._links.next
+                        delete responseBody._links.prev;
+                    }
+                    break;
+                case 2:
+                    if (req.query.page === 1) { // Si on est à la première page
+                        responseBody._links.next = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.prev;
+                        delete responseBody._links.prev;
+                    }
+                    if (!hasNextPage) { // Si on est à la dernière page et qu'on a seulement deux pages
+                        delete responseBody._links.next;
+                    }
+                    break;
+
+                default: // Si on a plus que deux page
+                    if (req.query.page === 1) { // Si on est à la première page
+                        responseBody._links.next = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.prev;
+                        delete responseBody._links.prev;
+                    }
+
+                    if (!hasNextPage) { // Si on est à la dernière page
+                        responseBody._links.prev = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.next;
+                        delete responseBody._links.next;
+                    }
+                    break;
+
             }
 
             res.status(200).json(responseBody);

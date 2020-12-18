@@ -6,7 +6,7 @@
 import express from "express";
 import httpError from "http-errors";
 import _ from "lodash";
-
+import paginate from 'express-paginate';
 import customersService from "../services/customersService.js";
 import customersRoutesValidators from "../validators/customersRoutesValidators.js";
 import error from "../utils/error.js";
@@ -29,7 +29,7 @@ class CustomersRoutes {
       validator,
       this.post
     );
-    router.get("/",paginate.middleware(25, 50), this.getAll);
+    router.get("/", paginate.middleware(25, 50), this.getAll);
   }
 
   //--------------------
@@ -38,14 +38,10 @@ class CustomersRoutes {
 
   async getAll(req, res, next) {
     const options = {
-        limit: req.query.limit,
-        page: req.query.page,
-        skip: req.skip
+      limit: req.query.limit,
+      page: req.query.page,
+      skip: req.skip,
     };
-
-    
-
-
   }
   //--------------------
   // KS - C4 - Tente d'obtenir un client
@@ -80,6 +76,31 @@ class CustomersRoutes {
 
     try {
       const nvCsr = req.body;
+
+      let customer = await customersService.create(nvCsr);
+
+      customer = customer.toObject({ virtuals: false });
+      customer = customersService.transform(customer, {});
+
+      res.header("Location", customer.planet);
+      if (req.query._body === "false") {
+        res.status(204).end(); // No content
+      } else {
+        res.status(201).json(customer); // Created
+      }
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  //--------------------
+  // LB - C2 - Tenter de modifier un customers
+  //--------------------
+  async put(req, res, next) {
+    try {
+      if (_.isEmpty(req.body)) {
+        return res.status(204).end();
+      }
 
       let customer = await customersService.create(nvCsr);
 

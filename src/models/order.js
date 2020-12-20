@@ -5,6 +5,9 @@ const orderSchema = mongoose.Schema({
     customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
+        localField:'customer',
+        foreignField: '_id',
+        justOne: true,
         required: true
     },
     pizzeria: {

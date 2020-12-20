@@ -21,14 +21,13 @@ class PizzeriasRoutes {
     constructor() {
         router.get('/', paginate.middleware(25, 50), this.getAll)
         router.post('/', pizzeriasRoutesValidators.postValidator(), validator, this.post);
-        router.get('/:idPizzeria',this.getOne);
-        router.get('/:idPizzeria/orders/:idOrder', this.getOneOrder);
+        router.get('/:idPizzeria', this.getOne);
     }
 
     //-----------------------------
     // JC - P1 - Tenter d'aller chercher toutes les pizzérias
     //-----------------------------
-    async getAll(req, res, next) { // WIP speciality not working
+    async getAll(req, res, next) {
         const options = {
             limit: req.query.limit,
             page: req.query.page,
@@ -43,13 +42,12 @@ class PizzeriasRoutes {
             const [pizzerias, documentsCount] = await pizzeriasService.retrieveAll(options);
 
             const pageCount = Math.ceil(documentsCount / req.query.limit);
-            console.log(pageCount);
             const functionPages = paginate.getArrayPages(req);
             const pageArray = functionPages(3, pageCount, req.query.page);
             const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
             if (req.query.page > pageCount) {
-                return next(httpError.BadRequest());
+                return next(httpError.BadRequest(`Page ${req.query.page} inexistante, il y a ${pageCount} pages dans la réponse.`));
             }
 
             const transformPizzerias = pizzerias.map(p => {
@@ -57,27 +55,23 @@ class PizzeriasRoutes {
                 p = pizzeriasService.transform(p);
                 return p;
             });
-            console.log(documentsCount);
-            console.log(pageArray);
 
             const responseBody = {
                 _links: {
                     prev: !(pageArray[0] == undefined) ? `${process.env.BASE_URL}${pageArray[0].url}` : null,
                     self: !(pageArray[1] == undefined) ? `${process.env.BASE_URL}${pageArray[1].url}` : null,
-                    next: !(pageArray[2] == undefined) ? `${process.env.BASE_URL}${pageArray[2].url}` : null 
+                    next: !(pageArray[2] == undefined) ? `${process.env.BASE_URL}${pageArray[2].url}` : null
                 },
                 data: transformPizzerias
             };
 
             switch (pageArray.length) {
-                case 1:
-                    if (req.query.page === 1) { // Si on a seulement une page.
-                        responseBody._links.self = responseBody._links.prev;
-                        delete responseBody._links.next
-                        delete responseBody._links.prev;
-                    }
+                case 1: // Si on a seulement une page
+                    responseBody._links.self = responseBody._links.prev;
+                    delete responseBody._links.next
+                    delete responseBody._links.prev;
                     break;
-                case 2:
+                case 2: // Si on a deux pages
                     if (req.query.page === 1) { // Si on est à la première page
                         responseBody._links.next = responseBody._links.self;
                         responseBody._links.self = responseBody._links.prev;
@@ -101,7 +95,6 @@ class PizzeriasRoutes {
                         delete responseBody._links.next;
                     }
                     break;
-
             }
 
             res.status(200).json(responseBody);
@@ -132,53 +125,32 @@ class PizzeriasRoutes {
     //-----------------------------
     // LB - P2 - Tenter d'aller chercher une pizzeria spécifié
     //-----------------------------
-    async getOne(req,res,next){
+    async getOne(req, res, next) {
 
         const options = {
-            isOrdersEmbed:false
+            isOrdersEmbed: false
         };
 
-        const idPizzeria=req.params.idPizzeria;
+        const idPizzeria = req.params.idPizzeria;
 
-        if (req.query.embed==='orders') {
-            options.isOrdersEmbed=true;
+        if (req.query.embed === 'orders') {
+            options.isOrdersEmbed = true;
         }
         try {
 
-            let pizzeria =await pizzeriasService.retrieveById(idPizzeria,options);
+            let pizzeria = await pizzeriasService.retrieveById(idPizzeria, options);
 
-            if(!pizzeria){
+            if (!pizzeria) {
                 return next(httpError.NotFound(`La pizzeria avec l'identifiant ${idPizzeria} n'existe pas.`))
             }
-        
-            pizzeria=pizzeria.toObject({virtuals:true});
-            pizzeria=pizzeriasService.transform(pizzeria,options);
+
+            pizzeria = pizzeria.toObject({ virtuals: true });
+            pizzeria = pizzeriasService.transform(pizzeria, options);
             res.status(200).json(pizzeria);
-        }catch(err){
+        } catch (err) {
 
         }
     }
-
-    //-----------------------------
-    // O2
-    //-----------------------------
-    async getOneOrder(req, res, next) {
-        const options = { isCustomerEmbed: false };
-        if (req.query.embed === 'customer') options.isCustomerEmbed = true;
-
-        const idPizzeria = req.params.idPizzeria;
-        const idOrder = req.params.idOrder;
-
-        try {
-            const order = await pizzeriasService.retrieveOrderById(idOrder, idPizzeria, options);
-
-            console.log(order);
-
-        } catch (error) {
-            return next(error);
-        }
-    }
-
 
 }
 

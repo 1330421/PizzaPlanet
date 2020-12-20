@@ -92,15 +92,15 @@ class OrdersRoutes {
         try {
             let order = await ordersService.retrieveByCriteria(criteria, options)
             if (!order) {
-                return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder}`));
+                return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder} et l'identifiant de pizzéria ${req.params.idPizzeria}`));
             }
             
             // Transformation de la réponse
-            order[0] = order[0].toObject({getters:false, virtuals: true});
-            order[0] = ordersService.transform(order[0], options);
+            order = order.toObject({virtuals: true});
+            order = ordersService.transform(order, options);
 
             // Envoyer la réponse
-            res.status(200).json(order[0]);
+            res.status(200).json(order);
         } catch (err) {
             return next(err);
         }

@@ -149,11 +149,11 @@ class CustomersRoutes {
   }
 
   //--------------------
-  // JC - C1 - Tenter d'ajouter un client
+  // JC - C1 - Tenter d'ajouter un client.
   //--------------------
   async post(req, res, next) {
     if (_.isEmpty(req.body)) {
-      return next(httpError.BadRequest()); // Err 400
+      return next(httpError.BadRequest("Le body de la requète ne peut pas être vide.")); // Err 400
     }
 
     try {
@@ -165,7 +165,7 @@ class CustomersRoutes {
       customer = customersService.transform(customer, {});
 
       res.header("Location", customer.planet);
-      if (req.query._body === "false") {
+      if (req.query._body === "false") { // Ici on regarge si le l'utilisateur spécifie qu'il ne veux pas qu'on affiche les infos du nouveau clients.
         res.status(204).end(); // No content
       } else {
         res.status(201).json(customer); // Created

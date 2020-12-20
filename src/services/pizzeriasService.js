@@ -17,12 +17,8 @@ class pizzeriasService {
         return Pizzeria.create(pizzeria);
     }
 
-    retrieveOrderById(idOrder, idPizzeria, options) {
-        return ordersService.retrieveByCriteria({ _id: idOrder, pizzeria: idPizzeria }, options);
-    }
-
     //--------------------
-    // JC - Aller chercher toutes les pizzerias
+    // JC - Aller chercher toutes les pizzerias avec, si spécifié, celles avec un chef avec la spécialité défini.
     //--------------------
     retrieveAll(options) {
         let retrieveQuery;
@@ -42,7 +38,6 @@ class pizzeriasService {
 
         return Promise.all([retrieveQuery, countQuery])
     }
-
 
 
     retrieveById(idPizzeria,options){

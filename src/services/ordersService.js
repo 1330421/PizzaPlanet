@@ -4,14 +4,25 @@
 // But : Fichier de service pour la gestion des commandes dans la base de données
 
 import Order from '../models/order.js';
+import customersService from './customersService.js';
 
 const TAXE = 0.0087;
 const FRACTION_DIGITS = 3;
 
 class OrdersService {
 
+
+    //--------------------
+    // JC - Retrouve une commande avec l'id de commande et de pizzeria définies (peux aussi insérer les informations du clients si demander).
+    //--------------------
     retrieveByCriteria(criteria, options) {
-        const retrieveOrder = Order.find(criteria);
+        const retrieveOrder = Order.findOne(criteria);
+
+        if (options.isCustomerEmbed) {
+
+            retrieveOrder.populate('customer');
+        }
+
         return retrieveOrder;
     }
 
@@ -40,13 +51,18 @@ class OrdersService {
     // KS - Transforme les données de la commande pour le corps de la réponse
     //--------------------
     transform(order, options = {}) {
-        order.href = `${process.env.BASE_URL}/orders/${order.customer}`;
-        order.customer = { href: `${process.env.BASE_URL}/customers/${order.customer}` };
+        order.href = `${process.env.BASE_URL}/orders/${order._id}`;
         order.pizzeria = { href: `${process.env.BASE_URL}/pizzerias/${order.pizzeria}` };
         order.subTotal = parseFloat(this.calculateSubTotal(order.pizzas).toFixed(FRACTION_DIGITS), 10);
         order.taxeRates = TAXE;
         order.taxes = parseFloat((order.subTotal * order.taxeRates).toFixed(FRACTION_DIGITS), 10);
         order.total = order.subTotal + order.taxes;
+
+        if (options.isCustomerEmbed) {
+            order.customer = customersService.transform(order.customer);
+        } else {
+            order.customer = { href: `${process.env.BASE_URL}/customers/${order.customer}` };
+        }
 
         order.pizzas.forEach(p => delete p.id);
         delete order._id;

@@ -111,25 +111,6 @@ class PizzeriasRoutes {
         }
     }
 
-    //--------------------
-    // KS - P3 - Tente d'ajouter une pizzeria
-    //--------------------
-    async post(req, res, next) {
-        try {
-            const newPizzeria = req.body;
-
-            let pizzeria = await pizzeriasService.create(newPizzeria);
-            pizzeria = pizzeriasService.transform(pizzeria.toObject());
-
-            res.header('Location', pizzeria.href);
-            if (req.query._body === 'false') res.status(204).end(); // 204
-            else res.status(201).json(pizzeria); // 201
-
-        } catch (error) {
-            return next(error); // 422 // 500
-        }
-    }
-
     //-----------------------------
     // LB - P2 - Tenter d'aller chercher une pizzeria spécifié
     //-----------------------------
@@ -158,6 +139,24 @@ class PizzeriasRoutes {
         }
     }
 
+    //--------------------
+    // KS - P3 - Tente d'ajouter une pizzeria
+    //--------------------
+    async post(req, res, next) {
+        try {
+            const newPizzeria = req.body;
+
+            let pizzeria = await pizzeriasService.create(newPizzeria);
+            pizzeria = pizzeriasService.transform(pizzeria.toObject());
+
+            res.header('Location', pizzeria.href);
+            if (req.query._body === 'false') res.status(204).end(); // 204
+            else res.status(201).json(pizzeria); // 201
+
+        } catch (error) {
+            return next(error); // 422 // 500
+        }
+    }
 }
 
 new PizzeriasRoutes();

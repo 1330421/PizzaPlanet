@@ -56,6 +56,14 @@ class CustomersServices {
     }
 
     //--------------------
+    // LB - Retrouve le client dans la base de donnée et le met à jour
+    //--------------------
+    update(idCustomer, customerMod) {
+        const filter = { _id: idCustomer };
+        return Customer.findOneAndUpdate(filter, customerMod, { new: true });
+    }
+
+    //--------------------
     // KS - Transforme les données du client pour le corps de la réponse
     //--------------------
     transform(customer, options = {}) {
@@ -86,18 +94,9 @@ class CustomersServices {
     //--------------------
     emailValidation(customer) {
         if (Customer.findOne({ email: customer.email })) {
-            console.log('ok');
             return false;
         }
         return true;
-    }
-
-    //--------------------
-    // LB - Retrouve le client dans la base de donnée et le met à jour
-    //--------------------
-    update(idCustomer, customerMod) {
-        const filter = { _id: idCustomer };
-        return Customer.findOneAndUpdate(filter, customerMod, { new: true });
     }
 }
 

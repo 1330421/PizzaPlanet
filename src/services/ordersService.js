@@ -17,21 +17,6 @@ const FRACTION_DIGITS = 3;
 
 class OrdersService {
 
-
-    //--------------------
-    // JC - Retrouve une commande avec l'id de commande et de pizzeria définies (peux aussi insérer les informations du clients si demander).
-    //--------------------
-    retrieveByCriteria(criteria, options) {
-        const retrieveOrder = Order.findOne(criteria);
-
-        if (options.isCustomerEmbed) {
-
-            retrieveOrder.populate('customer');
-        }
-
-        return retrieveOrder;
-    }
-
     //--------------------
     // KS - Retrouve toutes les commandes avec les options définies
     //--------------------
@@ -51,6 +36,20 @@ class OrdersService {
             .sort('-orderDate');
 
         return Promise.all([retrieveQuery, countQuery]);
+    }
+
+    //--------------------
+    // JC - Retrouve une commande avec l'id de commande et de pizzeria définies (peux aussi insérer les informations du clients si demander).
+    //--------------------
+    retrieveByCriteria(criteria, options) {
+        const retrieveOrder = Order.findOne(criteria);
+
+        if (options.isCustomerEmbed) {
+
+            retrieveOrder.populate('customer');
+        }
+
+        return retrieveOrder;
     }
 
     //--------------------

@@ -31,9 +31,68 @@ class CustomersRoutes {
   }
 
   //--------------------
+  // JC - C1 - Tenter d'ajouter un client.
+  //--------------------
+  async post(req, res, next) {
+    if (_.isEmpty(req.body)) {
+      return next(httpError.BadRequest("Le body de la requète ne peut pas être vide.")); // Err 400
+    }
+
+    try {
+      const nvCsr = req.body;
+
+      let customer = await customersService.create(nvCsr);
+
+      customer = customer.toObject({ virtuals: false });
+      customer = customersService.transform(customer, {});
+
+      res.header("Location", customer.planet);
+      if (req.query._body === "false") { // Ici on regarge si le l'utilisateur spécifie qu'il ne veux pas qu'on affiche les infos du nouveau clients.
+        res.status(204).end(); // No content
+      } else {
+        res.status(201).json(customer); // Created
+      }
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  //--------------------
+  // LB - C2 - Tenter de modifier un customer
+  //--------------------
+  async put(req, res, next) {
+    try {
+      // TODO vérifier que l'adresse existante n'est pas associée au même client
+      if (!await customersService.emailValidation(req.body)) {
+        return next(httpError.Conflict(`L'adresse de courriel existe déjà.`));
+      }
+      let customerMod = await customersService.update(
+        req.params.idCustomer,
+        req.body
+      );
+      if (!customerMod) {
+        return next(
+          httpError.NotFound(
+            `Le customer ${req.params.idCustomer} n'existe pas.`
+          )
+        );
+      }
+
+      customerMod = customerMod.toObject({ getters: false, virtuals: false });
+      customerMod = customersService.transform(customerMod);
+
+      if (req.query._body === "false") {
+        return res.status(204).end();
+      }
+      res.status(201).json(customerMod);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  //--------------------
   // LB - C3  - Tente d'obtenir tout les client
   //--------------------
-
   async getAll(req, res, next) {
     const options = {
       limit: req.query.limit,
@@ -142,66 +201,6 @@ class CustomersRoutes {
       res.status(200).json(customer); // 200
     } catch (error) {
       return next(error); // 500
-    }
-  }
-
-  //--------------------
-  // JC - C1 - Tenter d'ajouter un client.
-  //--------------------
-  async post(req, res, next) {
-    if (_.isEmpty(req.body)) {
-      return next(httpError.BadRequest("Le body de la requète ne peut pas être vide.")); // Err 400
-    }
-
-    try {
-      const nvCsr = req.body;
-
-      let customer = await customersService.create(nvCsr);
-
-      customer = customer.toObject({ virtuals: false });
-      customer = customersService.transform(customer, {});
-
-      res.header("Location", customer.planet);
-      if (req.query._body === "false") { // Ici on regarge si le l'utilisateur spécifie qu'il ne veux pas qu'on affiche les infos du nouveau clients.
-        res.status(204).end(); // No content
-      } else {
-        res.status(201).json(customer); // Created
-      }
-    } catch (error) {
-      return next(error);
-    }
-  }
-
-  //--------------------
-  // LB - C2 - Tenter de modifier un customer
-  //--------------------
-  async put(req, res, next) {
-    try {
-      // TODO vérifier que l'adresse existante n'est pas associée au même client
-      if (!await customersService.emailValidation(req.body)) {
-        return next(httpError.Conflict(`L'adresse de courriel existe déjà.`));
-      }
-      let customerMod = await customersService.update(
-        req.params.idCustomer,
-        req.body
-      );
-      if (!customerMod) {
-        return next(
-          httpError.NotFound(
-            `Le customer ${req.params.idCustomer} n'existe pas.`
-          )
-        );
-      }
-
-      customerMod = customerMod.toObject({ getters: false, virtuals: false });
-      customerMod = customersService.transform(customerMod);
-
-      if (req.query._body === "false") {
-        return res.status(204).end();
-      }
-      res.status(201).json(customerMod);
-    } catch (error) {
-      return next(error);
     }
   }
 }

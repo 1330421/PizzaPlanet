@@ -1,11 +1,15 @@
 // Fichier : customersService.js
-// Auteurs : Kevin St-Pierre - KS
+/* Auteurs
+ Jordan Côté - JC
+ Louis-Philippe Brunet - LB
+ Kevin St-Pierre - KS
+ */
 // Date : 2020-12-05
 // But : Fichier de service pour la gestion des clients dans la base de données
 
 import dayjs from 'dayjs';
 
-import Customer from '../models/customer.js'; 
+import Customer from '../models/customer.js';
 import ordersService from './ordersService.js';
 
 class CustomersServices {
@@ -20,19 +24,19 @@ class CustomersServices {
     //--------------------
     // LB - Renvoie les client selon les paramètres URL
     //--------------------
-    retrieveAll(options){
+    retrieveAll(options) {
         let retrieveQuery;
         let countQuery;
 
         const criteria = {
-            'planet':options.planet
+            'planet': options.planet
         }
         if (options.planet) {
             retrieveQuery = Customer.find(criteria);
             countQuery = Customer.countDocuments(criteria);
-        }else{
-        retrieveQuery = Customer.find();
-        countQuery = Customer.countDocuments();
+        } else {
+            retrieveQuery = Customer.find();
+            countQuery = Customer.countDocuments();
         }
         retrieveQuery.limit(options.limit).skip(options.skip).sort('birthday');
         return Promise.all([retrieveQuery, countQuery])
@@ -50,7 +54,7 @@ class CustomersServices {
     //--------------------
     // KS - Transforme les données du client pour le corps de la réponse
     //--------------------
-    transform(customer, options={}) {
+    transform(customer, options = {}) {
         customer.href = `${process.env.BASE_URL}/customers/${customer._id}`;
         customer.phone = `[${customer.phone.substring(0, 4)}]${customer.phone.substring(4, 8)}-${customer.phone.substring(8, 14)}@${customer.phone.substring(14, 16)}`;
         customer.age = this.calculateAge(customer.birthday);
@@ -76,8 +80,9 @@ class CustomersServices {
     //--------------------
     // LB - Vérifie si le courrie existe dans la base de donnée
     //--------------------
-    emailValidation(customer){
-        if( Customer.findOne(customer.email)){
+    emailValidation(customer) {
+        if (Customer.findOne({ email: customer.email })) {
+            console.log('ok');
             return false;
         }
         return true;
@@ -86,9 +91,9 @@ class CustomersServices {
     //--------------------
     // LB - Retrouve le client dans la base de donnée et le met à jour
     //--------------------
-    update(idCustomer,customerMod){
-        const filter={_id:idCustomer};
-        return Customer.findOneAndUpdate(filter,customerMod,{new:true});
+    update(idCustomer, customerMod) {
+        const filter = { _id: idCustomer };
+        return Customer.findOneAndUpdate(filter, customerMod, { new: true });
     }
 }
 

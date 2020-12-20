@@ -1,6 +1,8 @@
 // Fichier : ordersRoutes.js
-// Auteurs : Jordan Côté - JC
-// Kevin St-Pierre - KS
+/* Auteurs
+ Jordan Côté - JC
+ Kevin St-Pierre - KS
+ */
 // Date : 2020-12-13
 // But : Fichier des routes pour la gestion des commandes dans la base de données
 
@@ -39,36 +41,63 @@ class OrdersRoutes {
             const pageArray = functionPages(3, pageCount, options.page);
             const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-            if (options.page > pageCount) return next(httpError.BadRequest(`La page ${req.query.page} n'existe pas pour la sélection de commande`));
+            //if (options.page > pageCount) return next(httpError.BadRequest(`La page ${req.query.page} n'existe pas pour la sélection de commande`));
 
             const transformOrders = orders.map(o => ordersService.transform(o.toObject()));
 
             const responseBody = {
-                _links: {
-                    prev: `${process.env.BASE_URL}${pageArray[0].url}`,
-                    self: `${process.env.BASE_URL}${pageArray[1].url}`,
-                    next: `${process.env.BASE_URL}${pageArray[2].url}`
+                _metadata: {
+                    hasNextPage: hasNextPage,
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    totalPages: pageCount,
+                    totalDocument: documentsCount
                 },
-                result: transformOrders
+                _links: {
+                    prev: !(pageArray[0] == undefined) ? `${process.env.BASE_URL}${pageArray[0].url}` : null,
+                    self: !(pageArray[1] == undefined) ? `${process.env.BASE_URL}${pageArray[1].url}` : null,
+                    next: !(pageArray[2] == undefined) ? `${process.env.BASE_URL}${pageArray[2].url}` : null
+                },
+                results: transformOrders
             };
 
-            // KS - Adapte les liens de page à la première page
-            if (req.query.page === 1) {
-                responseBody._links.next = responseBody._links.self;
-                responseBody._links.self = responseBody._links.prev;
-                delete responseBody._links.prev;
-            }
-
-            // KS - Adapte les liens de page à la dernière page
-            if (!hasNextPage) {
-                responseBody._links.prev = responseBody._links.self;
-                responseBody._links.self = responseBody._links.next;
-                delete responseBody._links.next;
+            switch (pageArray.length) {
+                case 1: // KS - Adapte les liens à une page solitaire
+                    responseBody._links.self = responseBody._links.prev;
+                    delete responseBody._links.prev;
+                    delete responseBody._links.next;
+                    break;
+                case 2: // KS - Adapte les liens de page si on a deux pages
+                    // KS - Adapte les liens de page à la première page
+                    if (req.query.page === 1) {
+                        responseBody._links.next = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.prev;
+                        delete responseBody._links.prev;
+                    }
+                    // KS - Adapte les liens de page à la dernière page
+                    if (!hasNextPage) {
+                        delete responseBody._links.next;
+                    }
+                    break;
+                default:
+                    // KS - Adapte les liens de page à la première page
+                    if (req.query.page === 1) {
+                        responseBody._links.next = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.prev;
+                        delete responseBody._links.prev;
+                    }
+                    // KS - Adapte les liens de page à la dernière page
+                    if (!hasNextPage) {
+                        responseBody._links.prev = responseBody._links.self;
+                        responseBody._links.self = responseBody._links.next;
+                        delete responseBody._links.next;
+                    }
+                    break;
             }
 
             res.status(200).json(responseBody); // 200
         } catch (error) {
-            return next(console.error()); // 500
+            return next(error); // 500
         }
     }
 
@@ -94,15 +123,15 @@ class OrdersRoutes {
             if (!order) {
                 return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder} et l'identifiant de pizzéria ${req.params.idPizzeria}`));
             }
-            
+
             // Transformation de la réponse
-            order = order.toObject({virtuals: true});
+            order = order.toObject({ virtuals: true });
             order = ordersService.transform(order, options);
 
             // Envoyer la réponse
             res.status(200).json(order);
-        } catch (err) {
-            return next(err);
+        } catch (error) {
+            return next(error);
         }
     }
 }

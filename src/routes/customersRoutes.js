@@ -1,5 +1,9 @@
 // Fichier : customersRoutes.js
-// Auteurs : Kevin St-Pierre - KS
+/* Auteurs
+ Jordan Côté - JC
+ Louis-Philippe Brunet - LB
+ Kevin St-Pierre - KS
+ */
 // Date : 2020-12-12
 // But : Fichier des routes pour la gestion des clients dans la base de données
 
@@ -9,7 +13,6 @@ import _ from "lodash";
 import paginate from "express-paginate";
 import customersService from "../services/customersService.js";
 import customersRoutesValidators from "../validators/customersRoutesValidators.js";
-import error from "../utils/error.js";
 import validator from "../utils/validator.js";
 
 const router = express.Router();
@@ -33,7 +36,7 @@ class CustomersRoutes {
   }
 
   //--------------------
-  // LB -C3  - Tente d'obtenir tout les client
+  // LB - C3  - Tente d'obtenir tout les client
   //--------------------
 
   async getAll(req, res, next) {
@@ -55,9 +58,10 @@ class CustomersRoutes {
       const pageArray = functionPages(3, pageCount, req.query.page);
       const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-      if (req.query.page > pageCount) {
-        return next(httpError.BadRequest());
-      }
+      // TODO Ici, l'énoncé ne demande pas de message d'erreur s'il n'y a pas de document
+      // if (req.query.page > pageCount) {
+      //   return next(httpError.BadRequest());
+      // }
 
       const transformCustomers = customers.map((c) => {
         c = c.toObject({ virtuals: false });
@@ -66,6 +70,7 @@ class CustomersRoutes {
       });
 
       const responseBody = {
+        // TODO _metadata
         _links: {
           prev: !(pageArray[0] == undefined)
             ? `${process.env.BASE_URL}${pageArray[0].url}`
@@ -77,7 +82,7 @@ class CustomersRoutes {
             ? `${process.env.BASE_URL}${pageArray[2].url}`
             : null,
         },
-        data: transformCustomers,
+        results: transformCustomers,
       };
 
       switch (pageArray.length) {
@@ -170,8 +175,8 @@ class CustomersRoutes {
       } else {
         res.status(201).json(customer); // Created
       }
-    } catch (err) {
-      return next(err);
+    } catch (error) {
+      return next(error);
     }
   }
 
@@ -180,8 +185,9 @@ class CustomersRoutes {
   //--------------------
   async put(req, res, next) {
     try {
-      if (await customersService.emailValidation(req.body)) {
-        return next(httpError.Conflict(`L'adresse de courriel existe deja.`));
+      // TODO vérifier que l'adresse existante n'est pas associée au même client
+      if (!await customersService.emailValidation(req.body)) {
+        return next(httpError.Conflict(`L'adresse de courriel existe déjà.`));
       }
       let customerMod = await customersService.update(
         req.params.idCustomer,

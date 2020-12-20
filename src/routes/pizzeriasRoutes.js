@@ -1,18 +1,24 @@
 // Fichier : pizzeriasRoutes.js
-// Auteurs : Kevin St-Pierre - KS
+/* Auteurs
+ Jordan Côté - JC
+ Louis-Philippe Brunet - LB
+ Kevin St-Pierre - KS
+ */
 // Date : 2020-12-05
 // But : Fichier des routes pour la gestion des pizzerias dans la base de données
 
+// Modules
 import express from 'express';
 import httpError from 'http-errors';
 import paginate from 'express-paginate';
 import _ from 'lodash';
 
+// Services
 import pizzeriasService from '../services/pizzeriasService.js';
 
+// Validateurs
 import validator from '../utils/validator.js';
 import pizzeriasRoutesValidators from '../validators/pizzeriasRoutesValidators.js';
-import e from 'express';
 
 const router = express.Router();
 
@@ -46,9 +52,10 @@ class PizzeriasRoutes {
             const pageArray = functionPages(3, pageCount, req.query.page);
             const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-            if (req.query.page > pageCount) {
-                return next(httpError.BadRequest(`Page ${req.query.page} inexistante, il y a ${pageCount} pages dans la réponse.`));
-            }
+            // TODO Ici, l'énoncé ne demande pas de message d'erreur s'il n'y a pas de document
+            // if (req.query.page > pageCount) {
+            //     return next(httpError.BadRequest(`Page ${req.query.page} inexistante, il y a ${pageCount} pages dans la réponse.`));
+            // }
 
             const transformPizzerias = pizzerias.map(p => {
                 p = p.toObject({ virtuals: false });
@@ -57,12 +64,13 @@ class PizzeriasRoutes {
             });
 
             const responseBody = {
+                // TODO _metadata
                 _links: {
                     prev: !(pageArray[0] == undefined) ? `${process.env.BASE_URL}${pageArray[0].url}` : null,
                     self: !(pageArray[1] == undefined) ? `${process.env.BASE_URL}${pageArray[1].url}` : null,
                     next: !(pageArray[2] == undefined) ? `${process.env.BASE_URL}${pageArray[2].url}` : null
                 },
-                data: transformPizzerias
+                results: transformPizzerias
             };
 
             switch (pageArray.length) {
@@ -98,8 +106,8 @@ class PizzeriasRoutes {
             }
 
             res.status(200).json(responseBody);
-        } catch (err) {
-            return next(err);
+        } catch (error) {
+            return next(error);
         }
     }
 
@@ -111,8 +119,8 @@ class PizzeriasRoutes {
             const newPizzeria = req.body;
 
             let pizzeria = await pizzeriasService.create(newPizzeria);
-            pizzeria = pizzeria.toObject({ getters: false, virtuals: false });
-            pizzeria = pizzeriasService.transform(pizzeria);
+            //pizzeria = pizzeria.toObject({ getters: false, virtuals: false });
+            pizzeria = pizzeriasService.transform(pizzeria.toObject({ getters: false, virtuals: false }));
 
             res.header('Location', pizzeria.href);
             if (req.query._body === 'false') res.status(204).end(); // 204
@@ -122,11 +130,11 @@ class PizzeriasRoutes {
             return next(error); // 422 // 500
         }
     }
+
     //-----------------------------
     // LB - P2 - Tenter d'aller chercher une pizzeria spécifié
     //-----------------------------
     async getOne(req, res, next) {
-
         const options = {
             isOrdersEmbed: false
         };
@@ -137,7 +145,6 @@ class PizzeriasRoutes {
             options.isOrdersEmbed = true;
         }
         try {
-
             let pizzeria = await pizzeriasService.retrieveById(idPizzeria, options);
 
             if (!pizzeria) {
@@ -147,8 +154,8 @@ class PizzeriasRoutes {
             pizzeria = pizzeria.toObject({ virtuals: true });
             pizzeria = pizzeriasService.transform(pizzeria, options);
             res.status(200).json(pizzeria);
-        } catch (err) {
-
+        } catch (error) {
+            // TODO
         }
     }
 

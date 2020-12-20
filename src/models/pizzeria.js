@@ -4,7 +4,6 @@ import { COORD, MONSTER_ANCESTORS, PIZZA_TOPPINGS, PLANET_NAMES } from "../utils
 const pizzeriaSchema = mongoose.Schema({
   planet: {
     type: String,
-    // ref: "PLANETS_NAME",
     enum: PLANET_NAMES,
     required: true,
   },
@@ -16,13 +15,11 @@ const pizzeriaSchema = mongoose.Schema({
     name: { type: String, required: true },
     ancestor: {
       type: String,
-      // ref: "MONSTER_ANCESTORS",
       enum: MONSTER_ANCESTORS,
       required: true,
     },
     speciality: {
       type: String,
-      // ref: "PIZZA_TOPPINGS",
       enum: PIZZA_TOPPINGS,
       required: true,
     },

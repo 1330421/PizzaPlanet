@@ -6,11 +6,13 @@
 // Date : 2020-12-13
 // But : Fichier des routes pour la gestion des commandes dans la base de données
 
+// Modules
 import express from 'express';
 import paginate from 'express-paginate';
 import httpError from 'http-errors';
 import _ from 'lodash';
 
+// Services
 import ordersService from '../services/ordersService.js';
 
 const router = express.Router();

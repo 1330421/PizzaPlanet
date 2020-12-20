@@ -7,9 +7,13 @@
 // Date : 2020-12-05
 // But : Fichier de service pour la gestion des clients dans la base de données
 
+// Modules
 import dayjs from 'dayjs';
 
+// Modèles
 import Customer from '../models/customer.js';
+
+// Services
 import ordersService from './ordersService.js';
 
 class CustomersServices {

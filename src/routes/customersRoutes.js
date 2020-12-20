@@ -7,11 +7,16 @@
 // Date : 2020-12-12
 // But : Fichier des routes pour la gestion des clients dans la base de données
 
+// Modules
 import express from "express";
 import httpError from "http-errors";
 import _ from "lodash";
 import paginate from "express-paginate";
+
+// Services
 import customersService from "../services/customersService.js";
+
+// Validators
 import customersRoutesValidators from "../validators/customersRoutesValidators.js";
 import validator from "../utils/validator.js";
 
@@ -20,18 +25,8 @@ const router = express.Router();
 class CustomersRoutes {
   constructor() {
     router.get("/:idCustomer", this.getOne);
-    router.put(
-      "/:idCustomer",
-      customersRoutesValidators.postValidator(),
-      validator,
-      this.put
-    );
-    router.post(
-      "/",
-      customersRoutesValidators.postValidator(),
-      validator,
-      this.post
-    );
+    router.put("/:idCustomer", customersRoutesValidators.postValidator(), validator, this.put);
+    router.post("/", customersRoutesValidators.postValidator(), validator, this.post);
     router.get("/", paginate.middleware(20, 40), this.getAll);
   }
 
@@ -130,6 +125,7 @@ class CustomersRoutes {
       return next(error);
     }
   }
+
   //--------------------
   // KS - C4 - Tente d'obtenir un client
   //--------------------
@@ -140,13 +136,9 @@ class CustomersRoutes {
     const idCustomer = req.params.idCustomer;
     try {
       let customer = await customersService.retrieveById(idCustomer, options);
-      if (!customer)
-        return next(
-          httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)
-        ); // 404
+      if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)); // 404
 
-      customer = customer.toObject({ virtuals: true });
-      customer = customersService.transform(customer, options);
+      customer = customersService.transform(customer.toObject({ virtuals: true }), options);
       res.status(200).json(customer); // 200
     } catch (error) {
       return next(error); // 500

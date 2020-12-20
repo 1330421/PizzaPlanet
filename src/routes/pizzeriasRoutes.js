@@ -119,8 +119,7 @@ class PizzeriasRoutes {
             const newPizzeria = req.body;
 
             let pizzeria = await pizzeriasService.create(newPizzeria);
-            //pizzeria = pizzeria.toObject({ getters: false, virtuals: false });
-            pizzeria = pizzeriasService.transform(pizzeria.toObject({ getters: false, virtuals: false }));
+            pizzeria = pizzeriasService.transform(pizzeria.toObject());
 
             res.header('Location', pizzeria.href);
             if (req.query._body === 'false') res.status(204).end(); // 204
@@ -148,7 +147,7 @@ class PizzeriasRoutes {
             let pizzeria = await pizzeriasService.retrieveById(idPizzeria, options);
 
             if (!pizzeria) {
-                return next(httpError.NotFound(`La pizzeria avec l'identifiant ${idPizzeria} n'existe pas.`))
+                return next(httpError.NotFound(`La pizzeria avec l'identifiant ${idPizzeria} n'existe pas.`));
             }
 
             pizzeria = pizzeria.toObject({ virtuals: true });

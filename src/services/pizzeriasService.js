@@ -7,10 +7,11 @@
 // Date : 2020-12-05
 // But : Fichier de service pour la gestion des pizzerias dans la base de données
 
+// Modèles
 import Pizzeria from '../models/pizzeria.js';
+
+// Services
 import ordersService from './ordersService.js';
-
-
 
 class pizzeriasService {
 

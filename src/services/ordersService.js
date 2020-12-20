@@ -6,7 +6,10 @@
 // Date : 2020-12-13
 // But : Fichier de service pour la gestion des commandes dans la base de données
 
+// Modèles
 import Order from '../models/order.js';
+
+// Services
 import customersService from './customersService.js';
 
 const TAXE = 0.0087;

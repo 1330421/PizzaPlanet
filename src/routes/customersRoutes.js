@@ -63,6 +63,7 @@ class CustomersRoutes {
   async put(req, res, next) {
     try {
       // TODO vérifier que l'adresse existante n'est pas associée au même client
+      
       if (!await customersService.emailValidation(req.body)) {
         return next(httpError.Conflict(`L'adresse de courriel existe déjà.`));
       }

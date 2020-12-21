@@ -25,8 +25,18 @@ const router = express.Router();
 class CustomersRoutes {
   constructor() {
     router.get("/:idCustomer", this.getOne);
-    router.put("/:idCustomer", customersRoutesValidators.postValidator(), validator, this.put);
-    router.post("/", customersRoutesValidators.postValidator(), validator, this.post);
+    router.put(
+      "/:idCustomer",
+      customersRoutesValidators.postValidator(),
+      validator,
+      this.put
+    );
+    router.post(
+      "/",
+      customersRoutesValidators.postValidator(),
+      validator,
+      this.post
+    );
     router.get("/", paginate.middleware(20, 40), this.getAll);
   }
 
@@ -35,7 +45,9 @@ class CustomersRoutes {
   //--------------------
   async post(req, res, next) {
     if (_.isEmpty(req.body)) {
-      return next(httpError.BadRequest("Le body de la requète ne peut pas être vide.")); // Err 400
+      return next(
+        httpError.BadRequest("Le body de la requète ne peut pas être vide.")
+      ); // Err 400
     }
 
     try {
@@ -47,7 +59,8 @@ class CustomersRoutes {
       customer = customersService.transform(customer, {});
 
       res.header("Location", customer.planet);
-      if (req.query._body === "false") { // Ici on regarge si le l'utilisateur spécifie qu'il ne veux pas qu'on affiche les infos du nouveau clients.
+      if (req.query._body === "false") {
+        // Ici on regarge si le l'utilisateur spécifie qu'il ne veux pas qu'on affiche les infos du nouveau clients.
         res.status(204).end(); // No content
       } else {
         res.status(201).json(customer); // Created
@@ -62,9 +75,7 @@ class CustomersRoutes {
   //--------------------
   async put(req, res, next) {
     try {
-      // TODO vérifier que l'adresse existante n'est pas associée au même client
-      
-      if (!await customersService.emailValidation(req.body)) {
+      if (!(await customersService.emailValidation(req.body))) {
         return next(httpError.Conflict(`L'adresse de courriel existe déjà.`));
       }
       let customerMod = await customersService.update(
@@ -125,7 +136,13 @@ class CustomersRoutes {
       });
 
       const responseBody = {
-        // TODO _metadata
+        _metadata: {
+          hasNextPage: hasNextPage,
+          page: req.query.page,
+          limit: req.query.limit,
+          totalPages: pageCount,
+          totalDocument: documentsCount,
+        },
         _links: {
           prev: !(pageArray[0] == undefined)
             ? `${process.env.BASE_URL}${pageArray[0].url}`
@@ -196,9 +213,15 @@ class CustomersRoutes {
     const idCustomer = req.params.idCustomer;
     try {
       let customer = await customersService.retrieveById(idCustomer, options);
-      if (!customer) return next(httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)); // 404
+      if (!customer)
+        return next(
+          httpError.NotFound(`Le client avec l'id ${idCustomer} n'existe pas.`)
+        ); // 404
 
-      customer = customersService.transform(customer.toObject({ virtuals: true }), options);
+      customer = customersService.transform(
+        customer.toObject({ virtuals: true }),
+        options
+      );
       res.status(200).json(customer); // 200
     } catch (error) {
       return next(error); // 500

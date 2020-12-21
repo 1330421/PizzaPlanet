@@ -141,7 +141,7 @@ class PizzeriasRoutes {
             pizzeria = pizzeriasService.transform(pizzeria, options);
             res.status(200).json(pizzeria);
         } catch (error) {
-            // TODO
+            return next(error);
         }
     }
 

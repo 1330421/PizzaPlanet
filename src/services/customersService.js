@@ -92,10 +92,18 @@ class CustomersServices {
     //--------------------
     // LB - Vérifie si le courrie existe dans la base de donnée
     //--------------------
-    emailValidation(customer) {
-        if (Customer.findOne({ email: customer.email })) {
-            return false;
-        }
+    async emailValidation(customer) {
+        
+            if (Customer.findOne({ email: customer.email,name:customer.name })) {
+                return true;
+            }
+            else{
+                if (Customer.findOne({email:customer.email})) {
+                    return false;
+                }
+            }
+        
+        
         return true;
     }
 }

@@ -43,7 +43,7 @@ class pizzeriasService {
     }
 
     //--------------------
-    // TODO LB
+    // LB - Cherche une pizzeria spécifique dans la base de donnée et regarde si l'option embed est utilisé
     //--------------------
     retrieveById(idPizzeria, options) {
         const retrieveQuery = Pizzeria.findById(idPizzeria);

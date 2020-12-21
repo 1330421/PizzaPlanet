@@ -31,7 +31,7 @@ class PizzeriasRoutes {
     }
 
     //-----------------------------
-    // JC - P1 - Tenter d'aller chercher toutes les pizzérias
+    // JC - P1 - Tenter d'aller chercher toutes les pizzerias
     //-----------------------------
     async getAll(req, res, next) {
         const options = {
@@ -52,10 +52,10 @@ class PizzeriasRoutes {
             const pageArray = functionPages(3, pageCount, req.query.page);
             const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-            // TODO Ici, l'énoncé ne demande pas de message d'erreur s'il n'y a pas de document
-            // if (req.query.page > pageCount) {
-            //     return next(httpError.BadRequest(`Page ${req.query.page} inexistante, il y a ${pageCount} pages dans la réponse.`));
-            // }
+            if (pageCount === 0 && options.speciality) return next(httpError.NotFound(`Il n'y a pas de pizzeria avec un chef ayant la spécialité ${options.speciality}`));
+            if (req.query.page > pageCount) {
+                return next(httpError.BadRequest(`La page ${options.page} est inexistante, il n'y a que ${pageCount} pages dans la réponse.`));
+            }
 
             const transformPizzerias = pizzerias.map(p => {
                 p = p.toObject({ virtuals: false });

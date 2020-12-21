@@ -124,10 +124,10 @@ class CustomersRoutes {
       const pageArray = functionPages(3, pageCount, req.query.page);
       const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-      // TODO Ici, l'énoncé ne demande pas de message d'erreur s'il n'y a pas de document
-      // if (req.query.page > pageCount) {
-      //   return next(httpError.BadRequest());
-      // }
+      if (pageCount === 0 && options.planet) return next(httpError.NotFound(`Il n'y a aucun client sur la planète ${options.planet}.`));
+      if (req.query.page > pageCount) {
+        return next(httpError.BadRequest(`La page ${options.page} est inexistante, il n'y a que ${pageCount} pages dans la réponse.`));
+      }
 
       const transformCustomers = customers.map((c) => {
         c = c.toObject({ virtuals: false });

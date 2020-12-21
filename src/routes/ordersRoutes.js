@@ -43,7 +43,8 @@ class OrdersRoutes {
             const pageArray = functionPages(3, pageCount, options.page);
             const hasNextPage = paginate.hasNextPages(req)(pageCount);
 
-            //if (options.page > pageCount) return next(httpError.BadRequest(`La page ${req.query.page} n'existe pas pour la sélection de commande`));
+            if (pageCount === 0 && options.topping) return next(httpError.NotFound(`Il n'y a aucune commande avec la garniture ${options.topping}.`));
+            if (options.page > pageCount) return next(httpError.BadRequest(`La page ${options.page} est inexistante, il n'y a que ${pageCount} pages dans la réponse.`));
 
             const transformOrders = orders.map(o => ordersService.transform(o.toObject()));
 
@@ -123,7 +124,7 @@ class OrdersRoutes {
         try {
             let order = await ordersService.retrieveByCriteria(criteria, options)
             if (!order) {
-                return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder} et l'identifiant de pizzéria ${req.params.idPizzeria}`));
+                return next(httpError.NotFound(`Aucune commande avec l'identifiant ${req.params.idOrder} et l'identifiant de pizzeria ${req.params.idPizzeria}`));
             }
 
             // Transformation de la réponse

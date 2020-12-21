@@ -17,7 +17,7 @@ class PizzeriaRoutesValidators {
         return [
             body('planet')
                 .exists().withMessage(`Le nom de la planet doit être metionné.`).bail()
-                .isIn(PLANET_NAMES).withMessage('La planète mentionnée n\'est pas répertorié')
+                .isIn(PLANET_NAMES).withMessage('La planète mentionnée n\'est pas répertoriée')
         ];
     }
 

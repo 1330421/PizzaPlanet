@@ -1,0 +1,2090 @@
+{
+	"info": {
+		"_postman_id": "f1ccd4a4-fc08-4437-b4d0-592cb53f652f",
+		"name": "Pizza Planet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "A",
+			"item": [
+				{
+					"name": "P2",
+					"item": [
+						{
+							"name": "Obtenir une pizzeria spécifique - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41b43",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41b43"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une pizzeria spécifique - 200 embed orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41b43?embed=orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41b43"
+									],
+									"query": [
+										{
+											"key": "embed",
+											"value": "orders"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une pizzeria spécifique - 404 id invalide",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c61b43",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c61b43"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une pizzeria spécifique - 404 id non conforme",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c61b4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c61b4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "C2",
+					"item": [
+						{
+							"name": "Mise à jour complète d'un client - 200",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\",\n    \"referalCode\": \"wohGhiRe2ah\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 204",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeault@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee?_body=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									],
+									"query": [
+										{
+											"key": "_body",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 404",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fe5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fe5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 409",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"MariaWCrossland@armyspy.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 nom absent",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 courriel absent",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 courriel invalide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeaudayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 planète absente",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 planète  invalide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"test\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 coordonnées absentes",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 latitude et longitude supérieures",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": 1001,\n        \"lon\": 1001\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 latitude et longitude inférieures",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -1001,\n        \"lon\": -1001\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 téléphone absent",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 téléphone trop court",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 téléphone trop long",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E7\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 téléphone non hexa",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381X\",\n    \"birthday\": \"1951-06-14\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 date de naissance absente",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mise à jour complète d'un client - 422 date de naissance invalide",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Ambra Thibodeau\",\n    \"planet\": \"Ninia\",\n    \"coord\": {\n        \"lat\": -94.709,\n        \"lon\": 235.214\n    },\n    \"referalCode\": \"wohGhiRe2ah\",\n    \"email\": \"AmbraThibodeau@dayrep.com\",\n    \"phone\": \"99DED6D8CAFF381E\",\n    \"birthday\": \"19510614\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c41fee",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c41fee"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "C3",
+					"item": [
+						{
+							"name": "Obtenir tous les clients - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 200 ?page",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?page=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 400 ?page inexistante",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?page=156",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "156"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 200 ?limit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?limit=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 200 ?limit supérieur",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?limit=41",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "41"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 200 ?planet",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?planet=Pualia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "planet",
+											"value": "Pualia"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les clients - 404 ?planet inexistante",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers?planet=test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "planet",
+											"value": "test"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "B",
+			"item": [
+				{
+					"name": "P1",
+					"item": [
+						{
+							"name": "Obtenir toutes les pizzerias - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 200 ?page",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?page=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 400 ?page inexistante",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?page=52",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "52"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 200 ?limit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?limit=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 200 ?limit supérieure",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?limit=51",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "51"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 200 ?speciality",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?speciality=Mango",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "speciality",
+											"value": "Mango"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les pizzerias - 404 ?speciality inexistant",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?speciality=test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "speciality",
+											"value": "test"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "C1",
+					"item": [
+						{
+							"name": "Ajouter un client - 200",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 204",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"robb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers?_body=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "_body",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 409",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"RogerBourassa@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 nom absent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 courriel absent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\": \"5EF3640075270A44\",\n    \"birthday\": \"2002-08-03\",\n    \"referalCode\": \"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 courriel invalide",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rbgustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 planète absente",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 planète invalide",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"test\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 coordonnées absentes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 latitude et longitude supérieures",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 1001,\n        \"lon\": 1001\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 latitude et longitude inférieures",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": -1001,\n        \"lon\": -1001\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 téléphone absent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 téléphone trop court",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A4\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 téléphone trop long",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A4A6\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 téléphone non hexa",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270X44\",\n    \"birthday\":\"2002-08-03\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 date de naissance absente",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter un client - 422 date de naissance invalide",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Roger Bourassa\",\n    \"email\": \"rb@gustr.com\",\n    \"planet\": \"Porornania\",\n    \"coord\": {\n        \"lat\": 434.053,\n        \"lon\": 654.959\n    },\n    \"phone\":\"5EF3640075270A44\",\n    \"birthday\":\"20020803\",\n    \"referalCode\":\"va0eWooyae\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/customers",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "O2",
+					"item": [
+						{
+							"name": "Obtenir une commande spécifique d'une pizzeria - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41dff/orders/5fc6b8d15c0bb80365990876",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41dff",
+										"orders",
+										"5fc6b8d15c0bb80365990876"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une commande spécifique d'une pizzeria - 200 embed customer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41dff/orders/5fc6b8d15c0bb80365990876?embed=customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41dff",
+										"orders",
+										"5fc6b8d15c0bb80365990876"
+									],
+									"query": [
+										{
+											"key": "embed",
+											"value": "customer"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une commande spécifique d'une pizzeria - 404 pizzeria invalide",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41b43/orders/5fc6b8d15c0bb80365990876",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41b43",
+										"orders",
+										"5fc6b8d15c0bb80365990876"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une commande spécifique d'une pizzeria - 404 commande invalide",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/pizzerias/5fc125a21633312494c41dff/orders/5fc6b8d15c0bb803659908b5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias",
+										"5fc125a21633312494c41dff",
+										"orders",
+										"5fc6b8d15c0bb803659908b5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "C",
+			"item": [
+				{
+					"name": "P3",
+					"item": [
+						{
+							"name": "Ajouter une pizzeria - 201",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 204 sans corps de réponse",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias?_body=false",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									],
+									"query": [
+										{
+											"key": "_body",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422  planète absente",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422  planète invalide",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"test\",\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422 coordonnées absentes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422 latitude et longitude supérieures",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": 1001,\n        \"lon\": 1001\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422 latitude et longitude inférieures",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": -1001,\n        \"lon\": -1001\n    },\n    \"chef\": {\n        \"name\": \"Zigna\",\n        \"ancestor\": \"Graaha\",\n        \"speciality\": \"Octopus\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422 chef absent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Ajouter une pizzeria - 422 ancêtre et spécialité invalide",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"planet\": \"Xatov\",\n    \"coord\": {\n        \"lat\": 203.32,\n        \"lon\": -123.444\n    },\n    \"chef\": {\n        \"name\": \"test\",\n        \"ancestor\": \"test\",\n        \"speciality\": \"test\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7187/pizzerias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"pizzerias"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "C4",
+					"item": [
+						{
+							"name": "Obtenir un client - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c4201a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c4201a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir un client - 200 embed orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c427d1?embed=orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c427d1"
+									],
+									"query": [
+										{
+											"key": "embed",
+											"value": "orders"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir un client - 404",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/customers/5fc125a21633312494c42f1a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"customers",
+										"5fc125a21633312494c42f1a"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "O1",
+					"item": [
+						{
+							"name": "Obtenir toutes les commandes - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?page",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?page=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?page inexistante",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?page=501",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "501"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?limit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?limit=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?limit supérieure",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?limit=31",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "31"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?topping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?topping=Jalapeño",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "topping",
+											"value": "Jalapeño"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les commandes - 200 ?topping Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:7187/orders?topping=test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7187",
+									"path": [
+										"orders"
+									],
+									"query": [
+										{
+											"key": "topping",
+											"value": "test"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

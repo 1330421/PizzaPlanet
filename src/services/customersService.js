@@ -87,23 +87,19 @@ class CustomersServices {
         return today.diff(birthday, 'year');
     }
 
-
-
     //--------------------
     // LB - Vérifie si le courrie existe dans la base de donnée
     //--------------------
     async emailValidation(customer) {
-        
-            if (Customer.findOne({ email: customer.email,name:customer.name })) {
-                return true;
+
+        if (Customer.findOne({ email: customer.email, name: customer.name })) {
+            return true;
+        }
+        else {
+            if (Customer.findOne({ email: customer.email })) {
+                return false;
             }
-            else{
-                if (Customer.findOne({email:customer.email})) {
-                    return false;
-                }
-            }
-        
-        
+        }
         return true;
     }
 }

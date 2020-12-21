@@ -64,7 +64,13 @@ class PizzeriasRoutes {
             });
 
             const responseBody = {
-                // TODO _metadata
+                _metadata: {
+                    hasNextPage: hasNextPage,
+                    page: req.query.page,
+                    limit: req.query.limit,
+                    totalPages: pageCount,
+                    totalDocument: documentsCount
+                },
                 _links: {
                     prev: !(pageArray[0] == undefined) ? `${process.env.BASE_URL}${pageArray[0].url}` : null,
                     self: !(pageArray[1] == undefined) ? `${process.env.BASE_URL}${pageArray[1].url}` : null,
